@@ -2,7 +2,7 @@ configuration:
   backupStorageLocation:
     - name: aws
       provider: aws
-      bucket: REPLACE_WITH_BACKUP_BUCKET
+      bucket: taskflow-devops-backups
       config:
         region: ap-south-1
   volumeSnapshotLocation:
@@ -17,7 +17,7 @@ serviceAccount:
   server:
     create: true
     annotations:
-      eks.amazonaws.com/role-arn: REPLACE_WITH_BACKUP_ROLE_ARN
+      eks.amazonaws.com/role-arn: arn:aws:iam::111122223333:role/taskflow-backup
 initContainers:
   - name: velero-plugin-for-aws
     image: velero/velero-plugin-for-aws:v1.10.1

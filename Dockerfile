@@ -10,7 +10,7 @@ RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 WORKDIR /build
 COPY requirements.txt ./
-RUN pip install --require-hashes=false -r requirements.txt
+RUN python -m pip install -r requirements.txt
 
 FROM python:3.12-slim-bookworm AS runtime
 

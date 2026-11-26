@@ -15,6 +15,18 @@ os.environ["PATH"] = f"{BIN}{os.pathsep}{os.environ.get('PATH', '')}"
 
 REQUIRED_BINARIES = ("go", "helm", "kubectl", "kind", "docker", "kustomize", "sigstore")
 REQUIRED_PYTHON_MODULES = ("sigstore", "kubernetes", "docker")
+OPTIONAL_RUNTIME_PATHS = {
+    "podman": "podman",
+    "conmon": "conmon",
+    "runc": "runc",
+    "cni": "cni/ptp",
+    "containerd": "containerd-bin/containerd",
+    "ctr": "containerd-bin/ctr",
+    "etcd": "etcd",
+    "apiserver": "k8s/kube-apiserver",
+    "kubelet": "k8s/kubelet",
+    "kubeadm": "k8s/kubeadm",
+}
 COMMANDS = {
     "go": ["go", "version"],
     "helm": ["helm", "version", "--short"],
@@ -54,6 +66,12 @@ def main() -> int:
             continue
         print(f"  {name:<10} {path}")
 
+    print("\nOptional Docker-independent runtime")
+    for label, relative in OPTIONAL_RUNTIME_PATHS.items():
+        installed = (BIN / relative).is_file()
+        status = "ok" if installed else "not installed (make local-runtime)"
+        print(f"  {label:<10} {status}")
+
     for command in COMMANDS.values():
         code, output = run(command)
         status = "ok" if code == 0 else "FAILED"
@@ -75,8 +93,8 @@ def main() -> int:
         if not found:
             errors.append(f"missing Python module: {module}")
 
-    code, output = run(["docker", "info"])
-    daemon = "available" if code == 0 else "unavailable (expected in this sandbox)"
+    code, _ = run(["docker", "info"])
+    daemon = "available" if code == 0 else "unavailable; use make local-runtime/local-cluster-up"
     print(f"  docker daemon: {daemon}")
 
     terraform = shutil.which("terraform")

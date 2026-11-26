@@ -25,6 +25,8 @@ EXCLUDED = {
     "node_modules",
 }
 BINARY_SUFFIXES = {".png", ".jpg", ".jpeg", ".pdf", ".docx", ".db", ".sqlite3"}
+UNSET_TOKEN = "REPLACE_" + "WITH_"
+EXAMPLE_DOMAIN = "example" + ".com"
 ACTION_SHA = re.compile(r"^[0-9a-f]{40}$")
 ACTION_USE = re.compile(r"^\s*(?:-\s*)?uses:\s*([^\s@]+)@([^\s#]+)", re.MULTILINE)
 SECRET_PATTERNS = (
@@ -73,15 +75,24 @@ REQUIRED = (
     "platform/argocd/applicationset.yaml",
     "platform/observability/grafana-dashboard-taskflow.json",
     "platform/security/kyverno-policies.yaml",
+    "platform/security/.trivyignore.yaml",
     "platform/backup/velero-schedule.yaml",
     "docs/slo.md",
     "docs/lab-manual/DevOps-and-Automation-Lab-Manual.pdf",
     "docs/lab-manual/DevOps-and-Automation-Lab-Manual.docx",
     "docs/lab-manual/DevOps-and-Automation-Lab-Manual.md",
     "docs/toolchain.md",
+    "docs/local-runtime.md",
+    "docs/validation-evidence.md",
+    "config/platform.env",
     "requirements-tools.txt",
     "tools/install-platform-tools.sh",
     "tools/check-platform-tools.py",
+    "tools/configure_platform.py",
+    "tools/build_local_runtime.py",
+    "tools/install-local-runtime.sh",
+    "tools/local-cluster.sh",
+    "tools/check-local-runtime.py",
 )
 
 
@@ -208,6 +219,21 @@ def check_secrets(errors: list[str]) -> None:
                 break
 
 
+def check_platform_config(errors: list[str]) -> None:
+    script = ROOT / "tools" / "configure_platform.py"
+    result = subprocess.run(
+        [sys.executable, str(script), "--check"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.returncode != 0:
+        detail = (result.stderr or result.stdout).strip().splitlines()
+        message = detail[-1] if detail else "unknown configuration error"
+        errors.append(f"platform configuration check failed: {message}")
+
+
 def check_lab_manual(errors: list[str]) -> None:
     base = ROOT / "docs" / "lab-manual" / "DevOps-and-Automation-Lab-Manual"
     md_path = Path(f"{base}.md")
@@ -246,6 +272,8 @@ def check_lab_manual(errors: list[str]) -> None:
 
     for label, text in document_texts.items():
         lowered = text.lower()
+        if UNSET_TOKEN in text or EXAMPLE_DOMAIN in lowered:
+            errors.append(f"lab manual {label} contains an unconfigured platform value")
         for forbidden in FORBIDDEN_MANUAL_TEXT:
             if forbidden in lowered:
                 errors.append(f"lab manual {label} contains forbidden template content: {forbidden}")
@@ -266,6 +294,7 @@ def main() -> int:
     check_kustomize(errors)
     check_actions(errors)
     check_secrets(errors)
+    check_platform_config(errors)
     check_lab_manual(errors)
     if errors:
         print("Repository validation FAILED:", file=sys.stderr)
@@ -274,7 +303,7 @@ def main() -> int:
         return 1
     print(
         "Repository validation passed: required files, Python/shell, YAML/JSON/HCL, "
-        "Kustomize references, action pins, secrets and lab-manual content."
+        "Kustomize references, action pins, secrets, platform configuration and lab-manual content."
     )
     return 0
 

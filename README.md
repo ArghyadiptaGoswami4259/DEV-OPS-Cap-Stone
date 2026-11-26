@@ -92,9 +92,9 @@ verifies the Cosign signature and workflow identity, updates the production dige
 ## Production deployment notes
 
 Cloud infrastructure is declarative; it is **not** provisioned by cloning this repository. Review
-`docs/setup.md`, run the Terraform bootstrap, replace every `REPLACE_WITH_*` placeholder with
-approved Terraform outputs and DNS values, configure branch protection and the `production`
-Environment reviewers, then apply the Argo CD bootstrap. The checked-in `release.yaml` files are explicitly annotated
+`docs/setup.md`, set real account/DNS overrides in `config/platform.env` (or environment
+variables), run `make configure`, apply the Terraform bootstrap, configure branch protection and
+the `production` Environment reviewers, then apply the Argo CD bootstrap. The checked-in `release.yaml` files are explicitly annotated
 `taskflow.devops/state: bootstrap`: they are non-deployable scaffolding, not promoted releases.
 Only `tools/update_gitops.py` can mark a signed digest as promoted, and the strict release gate
 rejects the bootstrap state. Third-party image tags used for the local lab should be pinned to
@@ -118,10 +118,18 @@ header/footer, headings, code-panel and output-table design, but contains no IPC
 - `make tools` / `make tools-check`: installed and verified Go 1.27.4, Helm 3.10.1, kubectl
   1.31.9/Kustomize v5.4.2, Kind 0.33.0, Docker CLI 27.3.1 and the Python Sigstore/Kubernetes/Docker
   clients; binaries are kept in ignored `.tools/` rather than committed.
-- `make validate`: required files, Python/shell, YAML/JSON/HCL, Kustomize references, pinned actions,
-  secret heuristics, lab-manual student details and originality checks passed.
+- `make configure-check` / `make validate`: required files, synchronized platform configuration,
+  Python/shell, YAML/JSON/HCL, Kustomize references, pinned actions, secret heuristics, lab-manual
+  student details and originality checks passed.
 - `alembic upgrade head` against a disposable SQLite database and `bash -n` for every shell script:
   passed.
+- `make local-runtime` / `make local-runtime-check`: a clean rebuild and verification of Podman
+  5.2.5, conmon 2.1.12, runc v1.1.14 with libseccomp 2.5.5, CNI plugins v1.5.1, containerd 1.7.20,
+  etcd 3.5.16 and the Kubernetes 1.31.0 control-plane binaries from allowlisted source archives;
+  binaries remain in ignored `.tools/` rather than committed.
+- `make local-cluster-up` / `make local-cluster-check`: validated `/readyz`, one Ready node, healthy
+  etcd/scheduler/controller-manager components, a scheduled Pod with an assigned pod IP, and
+  container logs without using the Docker daemon.
 - `tools/verify_release.py --allow-bootstrap`: validates dev/staging/prod as non-deployable
   scaffolds; the strict production gate rejects them until a signed promotion.
 - Isolated promotion dry run: `update_gitops.py` followed by the strict staging/prod release gates
@@ -131,12 +139,15 @@ header/footer, headings, code-panel and output-table design, but contains no IPC
 - Lab manual: 24-page PDF, editable DOCX and Markdown source generated with `make lab-manual`;
   exact student details and absence of copied IPCV content are automatically checked.
 
-Still not executable in this sandbox: Docker **daemon**/Compose runtime, a live Kind/Kubernetes
-cluster, native Terraform apply and native Cosign verification. The official Terraform and Cosign
-binary hosts are blocked by the sandbox allowlist, and no container runtime socket or installable
-runtime packages are available. `kubectl`, Helm, Kustomize, Kind and the Docker **CLI** are now
-installed locally, and manifests/rendered overlays are validated. The CI/CD workflows, manifests
-and scripts for the remaining steps are included and are intended for a real runner or cluster.
+Still not executed end-to-end: Docker **daemon**/Compose and Kind-on-Docker paths, native
+Terraform apply, native Cosign verification, real AWS provisioning, Argo CD/Rollouts in-cluster
+behavior, Alertmanager delivery, Velero/RDS restore and production CD/promotion workflows.
+GitHub Actions PR CI checks run remotely and are reported by `gh pr checks`. The
+Docker-independent local Kubernetes path is validated through
+`make local-runtime`, `make local-cluster-up` and `make local-cluster-check`; see
+`docs/local-runtime.md` and `docs/validation-evidence.md`. The official Terraform and Cosign binary
+hosts remain blocked by the sandbox allowlist. Cloud manifests and production deployment workflows
+are intended for a real runner or cluster.
 
 ## License and ownership
 

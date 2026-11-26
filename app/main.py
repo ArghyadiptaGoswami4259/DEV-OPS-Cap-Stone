@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-import logging
 from collections.abc import AsyncIterator, Iterator
 from contextlib import asynccontextmanager
+from logging import getLogger
 
 import uvicorn
 from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response, status
@@ -31,7 +31,7 @@ from .schemas import (
 )
 from .ui import render_index
 
-logger = logging.getLogger("taskflow")
+logger = getLogger("taskflow")
 
 
 def get_db(request: Request) -> Iterator[Session]:

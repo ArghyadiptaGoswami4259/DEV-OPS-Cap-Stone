@@ -159,11 +159,11 @@ resource "aws_security_group" "rds" {
     security_groups = [module.eks.node_security_group_id]
   }
   egress {
-    description = "Allow database responses"
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    description     = "Allow database responses to EKS worker nodes only"
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    security_groups = [module.eks.node_security_group_id]
   }
   tags = merge(local.tags, { Name = "${local.name}-rds" })
 }
@@ -225,8 +225,10 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "backups" {
   bucket = aws_s3_bucket.backups.id
   rule {
     apply_server_side_encryption_by_default {
-      sse_algorithm = "AES256"
+      sse_algorithm     = "aws:kms"
+      kms_master_key_id = aws_kms_key.rds.arn
     }
+    bucket_key_enabled = true
   }
 }
 

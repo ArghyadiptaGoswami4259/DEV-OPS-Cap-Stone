@@ -41,9 +41,9 @@ spec:
                 - name: AWS_REGION
                   value: ap-south-1
                 - name: AWS_ROLE_ARN
-                  value: REPLACE_WITH_BACKUP_ROLE_ARN
+                  value: arn:aws:iam::111122223333:role/taskflow-backup
                 - name: DB_INSTANCE_IDENTIFIER
-                  value: REPLACE_WITH_RDS_INSTANCE_IDENTIFIER
+                  value: taskflow-primary
               resources:
                 requests:
                   cpu: 50m

@@ -6,6 +6,7 @@ import argparse
 import re
 import sys
 from pathlib import Path
+from urllib.parse import urlparse
 
 import yaml
 
@@ -17,6 +18,24 @@ STATE_ANNOTATION = "taskflow.devops/state"
 
 def load(relative: str) -> dict:
     return yaml.safe_load((ROOT / relative).read_text(encoding="utf-8"))
+
+
+def is_ghcr_repository(value: str) -> bool:
+    """Validate an OCI repository by parsing its hostname, not by substring matching."""
+    candidate = value.strip()
+    if not candidate:
+        return False
+    parsed = urlparse(candidate if "://" in candidate else f"oci://{candidate}")
+    return (
+        parsed.scheme == "oci"
+        and parsed.hostname == "ghcr.io"
+        and parsed.port is None
+        and parsed.username is None
+        and parsed.password is None
+        and not parsed.query
+        and not parsed.fragment
+        and bool(parsed.path.strip("/"))
+    )
 
 
 def check(condition: bool, message: str, errors: list[str]) -> None:
@@ -83,7 +102,11 @@ def main() -> int:
         )
         check(promotion.get("immutable") is True, "promoted release must be immutable", errors)
 
-    check(str(image.get("repository", "")).startswith("ghcr.io/"), "image repository must be GHCR", errors)
+    check(
+        is_ghcr_repository(str(image.get("repository", ""))),
+        "image repository must be GHCR",
+        errors,
+    )
     check(deployment.get("strategy") == "canary", "production strategy must be canary", errors)
     check(bool(deployment.get("canaryAnalysis")), "automated canary analysis must be enabled", errors)
     check(bool(deployment.get("automatedRollback")), "automated rollback must be enabled", errors)

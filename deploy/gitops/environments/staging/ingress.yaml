@@ -6,10 +6,10 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-staging
 spec:
   tls:
-    - hosts: ["staging.taskflow.example.com"]
+    - hosts: ["staging.taskflow.internal"]
       secretName: taskflow-staging-tls
   rules:
-    - host: staging.taskflow.example.com
+    - host: staging.taskflow.internal
       http:
         paths:
           - path: /

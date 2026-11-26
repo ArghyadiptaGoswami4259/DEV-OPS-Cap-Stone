@@ -11,7 +11,7 @@ All application logs are single-line JSON written to stdout. Promtail parses `le
 {app="taskflow", environment="prod"} | json | level=~"ERROR|CRITICAL"
 
 # Follow one request across application and ingress logs
-{app=~"taskflow|nginx"} | json | trace_id="REPLACE_WITH_TRACE_ID"
+{app=~"taskflow|nginx"} | json | trace_id="0af7651916cd43dd8448eb211c80319c"
 
 # Slow API calls (duration is in milliseconds)
 {app="taskflow"} | json | duration_ms > 500

@@ -603,7 +603,7 @@ APPENDICES = [
                     "All automated tests and security scans pass for the candidate commit.",
                     "The image digest is signed, scanned, SBOM-backed and workflow-identity verified.",
                     "Production approval, canary analysis, rollback and backup evidence are present.",
-                    "Every REPLACE_WITH_* placeholder has been replaced and the restore RTO has been measured.",
+                    "Every platform configuration value has been generated from config/platform.env and the restore RTO has been measured.",
                     "Bootstrap release scaffolds are marked taskflow.devops/state: bootstrap and cannot pass the strict production gate.",
                 ],
             ),

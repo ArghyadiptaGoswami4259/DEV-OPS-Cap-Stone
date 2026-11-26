@@ -17,8 +17,10 @@
 
 ## Operator actions before first production promotion
 
-- [ ] Replace every `REPLACE_WITH_*` placeholder with approved Terraform outputs, DNS, email and
-      IRSA role ARNs.
+- [x] Platform values are generated from the checked-in `config/platform.env`; `make configure-check`
+      verifies every backend, overlay, backup, certificate, DNS and log-query value is synchronized.
+- [ ] Override the safe local defaults with the approved AWS account ID, Terraform outputs, DNS names,
+      certificate email and IRSA role ARNs before a cloud deployment, then run `make configure`.
 - [ ] Configure branch protection, CODEOWNERS enforcement and the `production` Environment
       reviewers.
 - [ ] Replace example webhook, Grafana and Alertmanager destinations with approved endpoints.

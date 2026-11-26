@@ -192,10 +192,17 @@ Obtained from allowlisted sources:
 - `sigstore` and `kustomize` command wrappers
 
 Not available in this sandbox:
-- Docker daemon / container runtime (no socket, no installable apt packages)
+- Docker daemon / Compose and Kind-on-Docker paths (no Docker socket or installable daemon package)
 - Native Terraform binary (releases.hashicorp.com is blocked)
 - Native Cosign binary (GitHub release-asset host is blocked)
-- A live Kubernetes cluster (requires Docker/Podman/containerd and kernel privileges)
+- Official Kubernetes release binaries (release-asset hosts are blocked)
+
+Optional Docker-independent runtime:
+- Run 'make local-runtime' to build Podman, conmon, libseccomp/runc, CNI plugins,
+  containerd, etcd and Kubernetes 1.31.0 from pinned codeload.github.com sources.
+- Run 'make local-runtime-check' to verify those binaries offline.
+- Run 'make local-cluster-up' and 'make local-cluster-check' for a local
+  Kubernetes control plane and Pod-runtime validation without the Docker daemon.
 
 The CI/CD workflows still use official pinned actions for Terraform, Cosign,
 Docker, Helm and Kubernetes in a real runner.

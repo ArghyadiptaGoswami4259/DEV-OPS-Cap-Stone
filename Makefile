@@ -4,9 +4,10 @@ PY := .venv/bin/python
 PIP := .venv/bin/pip
 IMAGE ?= taskflow:local
 
-.PHONY: help env install lint test coverage run validate release-check lab-manual diagrams \
-        tools tools-check docker-build compose-up compose-observability kind-up deploy-local \
-        verify-platform canary-drill rollback hooks clean
+.PHONY: help env install lint test coverage run validate configure configure-check release-check \
+        lab-manual diagrams tools tools-check local-runtime local-runtime-check \
+        local-cluster-up local-cluster-check local-cluster-down docker-build compose-up \
+        compose-observability kind-up deploy-local verify-platform canary-drill rollback hooks clean
 
 help: ## Show available targets
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-24s\033[0m %s\n", $$1, $$2}'
@@ -36,7 +37,13 @@ run: ## Run TaskFlow locally with a disposable SQLite database
 	@mkdir -p .cache
 	@DATABASE_URL=sqlite:///./.cache/taskflow.db APP_ENVIRONMENT=local HOST=0.0.0.0 $(PY) -m app
 
-validate: ## Parse every manifest and verify required platform files
+configure: ## Render platform manifests from config/platform.env and environment overrides
+	@$(PY) tools/configure_platform.py --apply
+
+configure-check: ## Verify platform manifests are synchronized with config/platform.env
+	@$(PY) tools/configure_platform.py --check
+
+validate: configure-check ## Parse every manifest and verify required platform files
 	@$(PY) tools/validate_repo.py
 
 tools: ## Install local Go/Helm/kubectl/Kind/Docker CLI tooling into ignored .tools/
@@ -44,6 +51,21 @@ tools: ## Install local Go/Helm/kubectl/Kind/Docker CLI tooling into ignored .to
 
 tools-check: ## Verify the locally installed platform toolchain
 	@$(PY) tools/check-platform-tools.py
+
+local-runtime: ## Build a Docker-independent container/Kubernetes runtime into ignored .tools/
+	@bash tools/install-local-runtime.sh
+
+local-runtime-check: ## Verify source-built Podman/runc/CNI/containerd/etcd/Kubernetes binaries
+	@$(PY) tools/check-local-runtime.py --offline
+
+local-cluster-up: ## Start the Docker-independent local Kubernetes control plane
+	@bash tools/local-cluster.sh up
+
+local-cluster-check: ## Verify local Kubernetes readiness, node health, scheduling and logs
+	@$(PY) tools/check-local-runtime.py --cluster
+
+local-cluster-down: ## Stop the Docker-independent local Kubernetes control plane
+	@bash tools/local-cluster.sh down
 
 release-check: ## Verify the production release manifest and policy gates
 	@$(PY) tools/verify_release.py --environment prod

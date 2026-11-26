@@ -10,6 +10,9 @@
 
 ```bash
 make install
+make tools
+make configure           # optional: render overrides from config/platform.env
+make configure-check
 make test
 make validate
 make run                 # http://localhost:8000
@@ -23,7 +26,7 @@ make compose-observability
 # TaskFlow http://localhost:8000, Grafana http://localhost:3000
 ```
 
-For the full local Kubernetes platform:
+For the full local Kubernetes platform on a machine with Docker:
 
 ```bash
 make kind-up              # builds the image, installs pinned charts, applies dev overlay
@@ -33,7 +36,19 @@ make canary-drill
 
 `make kind-up` requires a working Docker daemon. `WITH_GITOPS=true make kind-up` also installs Argo
 CD and applies the app-of-apps ApplicationSet. `WITH_VELERO=true make kind-up` installs Velero,
-but only after replacing the AWS bucket and role placeholders in `platform/backup/velero-values.yaml`.
+but only after setting real AWS bucket and role values with `make configure`.
+
+For a Docker-daemon-free control plane and pod-runtime validation:
+
+```bash
+make local-runtime        # build Podman/containerd/runc/CNI/etcd/Kubernetes from source
+make local-cluster-up     # start local etcd, API server, controllers, scheduler and kubelet
+make local-cluster-check  # verify readiness, node health, Pod scheduling and container logs
+make local-cluster-down   # stop the local control plane
+```
+
+This path uses rootful Podman, containerd and runc locally; see `docs/local-runtime.md`. It is a
+reproducible validation cluster, not a production Kubernetes distribution.
 
 ## AWS path
 
@@ -44,8 +59,9 @@ terraform -chdir=infra/terraform/bootstrap init
 terraform -chdir=infra/terraform/bootstrap apply
 ```
 
-2. Copy `state_bucket` and `lock_table` outputs into each
-   `infra/terraform/environments/<env>.backend.hcl`.
+2. Set `TASKFLOW_TF_STATE_PREFIX` and `TASKFLOW_TF_LOCK_TABLE` from the bootstrap outputs in
+   `config/platform.env` (or export them), then run `make configure`. The three environment backend
+   HCL files are rendered deterministically from those two values.
 3. Initialize and review an environment:
 
 ```bash
@@ -54,8 +70,10 @@ terraform -chdir=infra/terraform plan -var-file=environments/prod.tfvars
 terraform -chdir=infra/terraform apply -var-file=environments/prod.tfvars
 ```
 
-4. Replace `REPLACE_WITH_*` values in the staging/prod overlays and platform Helm values with
-   Terraform outputs, real DNS names, notification email and approved certificate issuers.
+4. Set real DNS, certificate email, RDS and IRSA role values in `config/platform.env` (or export
+   matching environment variables), then run `make configure` and `make configure-check`. The
+   staging/prod overlays, backup policy, certificate issuers and observability examples are
+   rendered from that single input set.
 5. Configure GitHub Environment protection rules: require reviewers for `production`, restrict
    deployment branches and record the approver identity.
 6. Install the platform Helm charts, then apply `platform/argocd/project.yaml` and

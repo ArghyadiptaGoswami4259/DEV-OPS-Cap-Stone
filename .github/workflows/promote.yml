@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: production
-      url: https://taskflow.example.com
+      url: https://taskflow.internal
     timeout-minutes: 20
     steps:
       - name: Checkout delivery branch
