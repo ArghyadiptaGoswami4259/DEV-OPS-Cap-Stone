@@ -5,8 +5,8 @@ PIP := .venv/bin/pip
 IMAGE ?= taskflow:local
 
 .PHONY: help env install lint test coverage run validate release-check lab-manual diagrams \
-        docker-build compose-up compose-observability kind-up deploy-local verify-platform \
-        canary-drill rollback hooks clean
+        tools tools-check docker-build compose-up compose-observability kind-up deploy-local \
+        verify-platform canary-drill rollback hooks clean
 
 help: ## Show available targets
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-24s\033[0m %s\n", $$1, $$2}'
@@ -17,7 +17,7 @@ env: ## Generate a local .env with random development-only passwords
 
 install: env ## Create the virtualenv and install runtime + development dependencies
 	@python3 -m venv .venv
-	@$(PIP) install --quiet --disable-pip-version-check -r requirements-dev.txt
+	@$(PIP) install --quiet --disable-pip-version-check -r requirements-dev.txt -r requirements-tools.txt
 
 lint: ## Run formatting rules, static typing, repository validation, and dependency audit
 	@$(PY) -m ruff check .
@@ -38,6 +38,12 @@ run: ## Run TaskFlow locally with a disposable SQLite database
 
 validate: ## Parse every manifest and verify required platform files
 	@$(PY) tools/validate_repo.py
+
+tools: ## Install local Go/Helm/kubectl/Kind/Docker CLI tooling into ignored .tools/
+	@bash tools/install-platform-tools.sh
+
+tools-check: ## Verify the locally installed platform toolchain
+	@$(PY) tools/check-platform-tools.py
 
 release-check: ## Verify the production release manifest and policy gates
 	@$(PY) tools/verify_release.py --environment prod
@@ -80,5 +86,5 @@ rollback: ## Abort the current rollout and return to the last stable ReplicaSet
 hooks: ## Install local Git hooks for commit-message and pre-commit validation
 	@bash tools/install-git-hooks.sh
 
-clean: ## Remove local caches (never removes the repository or .git)
-	@rm -rf .cache .pytest_cache .mypy_cache .ruff_cache htmlcov .coverage coverage.xml
+clean: ## Remove local caches and tool binaries (never removes the repository or .git)
+	@rm -rf .cache .tools .pytest_cache .mypy_cache .ruff_cache htmlcov .coverage coverage.xml

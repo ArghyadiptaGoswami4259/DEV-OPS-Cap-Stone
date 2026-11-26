@@ -16,6 +16,8 @@ Keep a Changelog, and this project follows Semantic Versioning.
 - Kyverno policies, NetworkPolicies, External Secrets, IRSA and threat model.
 - Velero/RDS backup policy, rollback and disaster-recovery runbooks.
 - Lab manual in the supplied visual template with original DevOps content and student details.
+- `make tools` local toolchain installer and `make tools-check` verifier using sandbox-allowlisted
+  sources for Go, Helm, kubectl/Kustomize, Kind, Docker CLI and Python platform clients.
 
 ### Changed
 - Upgraded FastAPI/Starlette to audited versions after `pip-audit` identified vulnerabilities in the

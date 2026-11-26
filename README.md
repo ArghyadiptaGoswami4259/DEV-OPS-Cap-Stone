@@ -49,6 +49,8 @@ docs/lab-manual/          Generated PDF, DOCX, Markdown and design assets
 
 ```bash
 make install       # virtualenv + pinned dependencies + random local .env
+make tools         # local Go/Helm/kubectl/Kind/Docker CLI into ignored .tools/
+make tools-check   # verify the local platform toolchain
 make test          # API and platform behaviour tests
 make lint          # Ruff, MyPy, YAML/JSON, pinned actions, secret heuristics, pip-audit
 make validate      # manifest/structure validation
@@ -65,10 +67,14 @@ make verify-platform
 make canary-drill
 ```
 
-`make kind-up` requires Docker, Kind, Helm and kubectl. It creates a four-node cluster, installs
-pinned versions of Prometheus Operator/Grafana, ingress-nginx, cert-manager, External Secrets,
-Argo Rollouts, Loki/Promtail and Kyverno, builds/loads `taskflow:local`, and applies the dev
-overlay. Argo CD and Velero are opt-in with `WITH_GITOPS=true` and `WITH_VELERO=true`.
+`make tools` installs Go, Helm, kubectl/Kustomize, Kind and the Docker CLI from sandbox-allowlisted
+sources; see [`docs/toolchain.md`](docs/toolchain.md). Put `.tools/bin` on `PATH` before running
+cluster commands. `make kind-up` additionally requires a working Docker daemon or compatible
+container runtime; the sandbox provides the client but not the daemon. In a normal runner it creates
+a four-node cluster, installs pinned versions of Prometheus Operator/Grafana, ingress-nginx,
+cert-manager, External Secrets, Argo Rollouts, Loki/Promtail and Kyverno, builds/loads
+`taskflow:local`, and applies the dev overlay. Argo CD and Velero are opt-in with
+`WITH_GITOPS=true` and `WITH_VELERO=true`.
 
 ## Delivery flow
 
@@ -109,7 +115,10 @@ header/footer, headings, code-panel and output-table design, but contains no IPC
 - `make lint`: Ruff, MyPy, Bandit, repository validation and `pip-audit` passed; no known runtime
   vulnerabilities in the pinned requirements.
 - `make test`: 11 passed.
-- `make validate`: required files, Python/YAML/JSON/HCL, Kustomize references, pinned actions,
+- `make tools` / `make tools-check`: installed and verified Go 1.27.4, Helm 3.10.1, kubectl
+  1.31.9/Kustomize v5.4.2, Kind 0.33.0, Docker CLI 27.3.1 and the Python Sigstore/Kubernetes/Docker
+  clients; binaries are kept in ignored `.tools/` rather than committed.
+- `make validate`: required files, Python/shell, YAML/JSON/HCL, Kustomize references, pinned actions,
   secret heuristics, lab-manual student details and originality checks passed.
 - `alembic upgrade head` against a disposable SQLite database and `bash -n` for every shell script:
   passed.
@@ -122,9 +131,12 @@ header/footer, headings, code-panel and output-table design, but contains no IPC
 - Lab manual: 24-page PDF, editable DOCX and Markdown source generated with `make lab-manual`;
   exact student details and absence of copied IPCV content are automatically checked.
 
-Not executed in this sandbox because the binaries are unavailable: Docker build, Compose, Kind,
-Helm, kubectl, Terraform apply, Cosign verification and a live-cluster canary. The workflows,
-manifests and scripts for those steps are included and are intended for the target environment.
+Still not executable in this sandbox: Docker **daemon**/Compose runtime, a live Kind/Kubernetes
+cluster, native Terraform apply and native Cosign verification. The official Terraform and Cosign
+binary hosts are blocked by the sandbox allowlist, and no container runtime socket or installable
+runtime packages are available. `kubectl`, Helm, Kustomize, Kind and the Docker **CLI** are now
+installed locally, and manifests/rendered overlays are validated. The CI/CD workflows, manifests
+and scripts for the remaining steps are included and are intended for a real runner or cluster.
 
 ## License and ownership
 

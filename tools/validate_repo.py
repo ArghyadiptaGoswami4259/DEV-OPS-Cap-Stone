@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -20,6 +21,7 @@ EXCLUDED = {
     ".pytest_cache",
     ".mypy_cache",
     ".ruff_cache",
+    ".tools",
     "node_modules",
 }
 BINARY_SUFFIXES = {".png", ".jpg", ".jpeg", ".pdf", ".docx", ".db", ".sqlite3"}
@@ -76,6 +78,10 @@ REQUIRED = (
     "docs/lab-manual/DevOps-and-Automation-Lab-Manual.pdf",
     "docs/lab-manual/DevOps-and-Automation-Lab-Manual.docx",
     "docs/lab-manual/DevOps-and-Automation-Lab-Manual.md",
+    "docs/toolchain.md",
+    "requirements-tools.txt",
+    "tools/install-platform-tools.sh",
+    "tools/check-platform-tools.py",
 )
 
 
@@ -101,6 +107,20 @@ def check_python(errors: list[str]) -> None:
             compile(path.read_text(encoding="utf-8"), str(path), "exec")
         except (OSError, SyntaxError) as exc:
             errors.append(f"Python syntax error in {path.relative_to(ROOT)}: {exc}")
+
+
+def check_shell(errors: list[str]) -> None:
+    for path in iter_files({".sh"}):
+        result = subprocess.run(
+            ["bash", "-n", str(path)],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if result.returncode != 0:
+            detail = (result.stderr or result.stdout).strip().splitlines()
+            message = detail[0] if detail else "unknown bash syntax error"
+            errors.append(f"Shell syntax error in {path.relative_to(ROOT)}: {message}")
 
 
 def check_yaml(errors: list[str]) -> None:
@@ -239,6 +259,7 @@ def main() -> int:
     errors: list[str] = []
     check_required(errors)
     check_python(errors)
+    check_shell(errors)
     check_yaml(errors)
     check_json(errors)
     check_hcl(errors)
@@ -252,7 +273,7 @@ def main() -> int:
             print(f"  - {error}", file=sys.stderr)
         return 1
     print(
-        "Repository validation passed: required files, Python, YAML/JSON/HCL, "
+        "Repository validation passed: required files, Python/shell, YAML/JSON/HCL, "
         "Kustomize references, action pins, secrets and lab-manual content."
     )
     return 0

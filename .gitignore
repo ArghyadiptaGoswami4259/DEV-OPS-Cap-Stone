@@ -39,3 +39,6 @@ terraform.rc
 dist/
 build/
 *.log
+
+# Locally installed platform tool binaries (not committed)
+.tools/
