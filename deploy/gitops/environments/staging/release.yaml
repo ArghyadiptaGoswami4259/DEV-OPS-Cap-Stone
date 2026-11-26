@@ -3,19 +3,19 @@ kind: ReleaseManifest
 metadata:
   environment: staging
   annotations:
-    taskflow.devops/state: bootstrap
+    taskflow.devops/state: promoted
 spec:
   image:
     repository: ghcr.io/arghyadiptagoswami4259/dev-ops-cap-stone/taskflow
-    digest: sha256:0000000000000000000000000000000000000000000000000000000000000000
-    signed: false
-    verifiedBy: pending
+    digest: sha256:3fdf112b19c5e9d1e2a7d7698cd1d847e98a23a4455997b1bb492796837365df
+    signed: true
+    verifiedBy: cosign-keyless
   source:
-    commit: bootstrap
+    commit: cc4509edefbc5fcfe02b8808118f81a750f311eb
     workflow: ci
   approval:
     required: true
-    approvedBy: pending
+    approvedBy: automation
   deployment:
     strategy: canary
     minReplicas: 2
@@ -26,5 +26,5 @@ spec:
     rpoMinutes: 60
     rtoMinutes: 30
   promotion:
-    timestamp: not-promoted
-    immutable: false
+    timestamp: '2026-11-26T23:42:14.845013+00:00'
+    immutable: true

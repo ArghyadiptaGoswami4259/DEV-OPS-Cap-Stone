@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: taskflow-config
 data:
-  APP_ENVIRONMENT: "staging"
-  APP_VERSION: "1.0.0"
-  APP_GIT_SHA: "bootstrap"
-  APP_FAILURE_RATE: "0"
+  APP_ENVIRONMENT: staging
+  APP_VERSION: 1.0.0
+  APP_GIT_SHA: cc4509edefbc
+  APP_FAILURE_RATE: '0'
