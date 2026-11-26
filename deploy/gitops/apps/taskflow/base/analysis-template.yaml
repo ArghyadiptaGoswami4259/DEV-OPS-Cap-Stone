@@ -1,0 +1,64 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: taskflow-slo
+  labels:
+    app: taskflow
+spec:
+  args:
+    - name: namespace
+    - name: job
+      value: taskflow-canary
+  metrics:
+    - name: canary-error-rate
+      interval: 60s
+      count: 3
+      failureLimit: 1
+      successCondition: result[0] < 0.02
+      provider:
+        prometheus:
+          address: http://prometheus-operated.monitoring.svc.cluster.local:9090
+          query: |
+            (
+              sum(rate(taskflow_http_requests_total{
+                namespace="{{args.namespace}}",
+                job="{{args.job}}",
+                status=~"5.."
+              }[5m])) or vector(0)
+            ) / clamp_min(
+              (
+                sum(rate(taskflow_http_requests_total{
+                  namespace="{{args.namespace}}",
+                  job="{{args.job}}"
+                }[5m])) or vector(0)
+              ), 0.001
+            )
+    - name: canary-p95-latency
+      interval: 60s
+      count: 3
+      failureLimit: 1
+      successCondition: result[0] < 0.5
+      provider:
+        prometheus:
+          address: http://prometheus-operated.monitoring.svc.cluster.local:9090
+          query: |
+            histogram_quantile(
+              0.95,
+              sum by (le) (rate(taskflow_http_request_duration_seconds_bucket{
+                namespace="{{args.namespace}}",
+                job="{{args.job}}"
+              }[5m]))
+            ) or vector(0)
+    - name: canary-readiness
+      interval: 60s
+      count: 3
+      failureLimit: 1
+      successCondition: result[0] > 0
+      provider:
+        prometheus:
+          address: http://prometheus-operated.monitoring.svc.cluster.local:9090
+          query: |
+            min(taskflow_ready{
+              namespace="{{args.namespace}}",
+              job="{{args.job}}"
+            }) or vector(0)

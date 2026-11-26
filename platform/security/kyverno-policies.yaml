@@ -1,0 +1,95 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: taskflow-restricted-workloads
+  annotations:
+    policies.kyverno.io/title: Enforce restricted workload settings
+    policies.kyverno.io/severity: high
+    policies.kyverno.io/description: >-
+      TaskFlow namespaces must use non-root pods, RuntimeDefault seccomp,
+      read-only root filesystems, dropped capabilities and bounded resources.
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+    - name: require-restricted-security-context
+      match:
+        any:
+          - resources:
+              kinds: ["Pod"]
+              namespaces: ["taskflow-*"]
+              selector:
+                matchLabels:
+                  app: taskflow
+      validate:
+        message: "Pods must use restricted securityContext settings matching the base Rollout."
+        pattern:
+          spec:
+            securityContext:
+              runAsNonRoot: true
+              seccompProfile:
+                type: RuntimeDefault
+            containers:
+              - securityContext:
+                  allowPrivilegeEscalation: false
+                  readOnlyRootFilesystem: true
+                  capabilities:
+                    drop: ["ALL"]
+                resources:
+                  limits:
+                    cpu: "?*"
+                    memory: "?*"
+                  requests:
+                    cpu: "?*"
+                    memory: "?*"
+    - name: require-immutable-image-digest
+      match:
+        any:
+          - resources:
+              kinds: ["Pod"]
+              namespaces: ["taskflow-prod"]
+              selector:
+                matchLabels:
+                  app: taskflow
+      validate:
+        message: "Production images must be referenced by an immutable sha256 digest."
+        pattern:
+          spec:
+            containers:
+              - image: "*@sha256:*"
+---
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: taskflow-verify-signed-images
+  annotations:
+    policies.kyverno.io/title: Verify keyless TaskFlow image signatures
+    policies.kyverno.io/severity: high
+    policies.kyverno.io/description: >-
+      Enforces a Sigstore keyless signature issued to this repository's CI
+      workflow before production TaskFlow pods are admitted. The bootstrap
+      zero digest is intentionally blocked until the first signed promotion.
+spec:
+  validationFailureAction: Enforce
+  background: false
+  rules:
+    - name: verify-taskflow-signature
+      match:
+        any:
+          - resources:
+              kinds: ["Pod"]
+              namespaces: ["taskflow-prod"]
+              selector:
+                matchLabels:
+                  app: taskflow
+      verifyImages:
+        - imageReferences:
+            - "ghcr.io/arghyadiptagoswami4259/dev-ops-cap-stone/taskflow*"
+          failureAction: Enforce
+          attestors:
+            - count: 1
+              keyless:
+                issuer: https://token.actions.githubusercontent.com
+                subjectRegExp: "^https://github\\.com/ArghyadiptaGoswami4259/DEV-OPS-Cap-Stone/\\.github/workflows/ci\\.yml@refs/heads/.*$"
+                rekor:
+                  url: https://rekor.sigstore.dev

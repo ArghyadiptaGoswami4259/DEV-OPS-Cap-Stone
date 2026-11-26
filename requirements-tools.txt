@@ -1,0 +1,5 @@
+# Optional local platform clients installed by `make tools`.
+# These are API/verification clients; they do not replace native Terraform or Cosign binaries.
+sigstore==4.6.0
+kubernetes==37.0.3
+docker==7.2.0

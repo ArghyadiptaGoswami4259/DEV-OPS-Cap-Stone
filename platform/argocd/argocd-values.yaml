@@ -1,0 +1,41 @@
+global:
+  domain: argocd.taskflow.local
+configs:
+  params:
+    server.insecure: false
+    server.enable.anonymous: false
+  cm:
+    timeout.reconciliation: 180s
+    resource.exclusions: |
+      - apiGroups: ["external-secrets.io"]
+        kinds: ["SecretStore"]
+        clusters: ["*"]
+server:
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hostname: argocd.taskflow.local
+    tls: true
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+controller:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 1
+      memory: 1Gi
+repoServer:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi

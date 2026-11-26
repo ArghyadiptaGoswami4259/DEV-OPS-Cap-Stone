@@ -1,0 +1,15 @@
+groups:
+  - name: taskflow-logs
+    rules:
+      - alert: TaskFlowStructuredLogErrors
+        expr: |
+          sum(count_over_time(
+            {app="taskflow"} | json | level=~"ERROR|CRITICAL" [5m]
+          )) > 10
+        for: 5m
+        labels:
+          severity: warning
+          source: loki
+        annotations:
+          summary: "TaskFlow emitted an elevated number of structured error logs"
+          runbook_url: "runbooks/incident-response.md"

@@ -1,0 +1,18 @@
+admissionController:
+  replicas: 2
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop: ["ALL"]
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+backgroundController:
+  enabled: true
+cleanupController:
+  enabled: true
+reportsController:
+  enabled: true
+policyReports:
+  enabled: true

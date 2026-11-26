@@ -1,0 +1,7 @@
+# Default owners for the DevOps capstone platform.
+*                                   @ArghyadiptaGoswami4259
+/app/                               @ArghyadiptaGoswami4259
+/.github/workflows/                 @ArghyadiptaGoswami4259
+/deploy/                            @ArghyadiptaGoswami4259
+/infra/                             @ArghyadiptaGoswami4259
+/platform/security/                 @ArghyadiptaGoswami4259

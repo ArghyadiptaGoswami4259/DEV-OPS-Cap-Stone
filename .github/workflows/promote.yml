@@ -1,0 +1,100 @@
+name: CD - production approval and canary promotion
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_digest:
+        description: 'Signed sha256 digest already validated in staging'
+        required: true
+        type: string
+      source_commit:
+        description: 'Source commit SHA'
+        required: true
+        type: string
+      reason:
+        description: 'Business or technical reason for production promotion'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  packages: read
+  id-token: write
+
+concurrency:
+  group: cd-production
+  cancel-in-progress: false
+
+jobs:
+  production:
+    name: Approve and promote to production
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://taskflow.internal
+    timeout-minutes: 20
+    steps:
+      - name: Checkout delivery branch
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+      - name: Validate digest
+        run: |
+          if ! [[ "${{ inputs.image_digest }}" =~ ^sha256:[a-f0-9]{64}$ ]]; then
+            echo "Invalid image digest" >&2
+            exit 1
+          fi
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install manifest tooling
+        run: pip install PyYAML==6.0.2
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@dc72c7d5c4d10cd6bcb8cf6e3fd625a9e5e537da # v3.7.0
+      - name: Log in to GHCR
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Verify signed artifact
+        env:
+          IMAGE: ghcr.io/${{ github.repository }}/taskflow
+        run: |
+          IMAGE_LC="${IMAGE,,}"
+          cosign verify \
+            --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+            --certificate-identity-regexp "^https://github.com/${GITHUB_REPOSITORY}/\.github/workflows/ci\.yml@refs/heads/.*$" \
+            "${IMAGE_LC}@${{ inputs.image_digest }}"
+      - name: Update production GitOps manifest
+        run: |
+          python tools/update_gitops.py \
+            --environment prod \
+            --digest "${{ inputs.image_digest }}" \
+            --commit "${{ inputs.source_commit }}" \
+            --approved-by "github-environment-production"
+      - name: Enforce production release gate
+        run: python tools/verify_release.py --environment prod
+      - name: Commit approved production state [skip ci]
+        uses: stefanzweifel/git-auto-commit-action@b863ae1933cb653a53c021fe36dbb774e1fb9403 # v5
+        with:
+          branch: ${{ github.ref_name }}
+          commit_message: "chore(gitops): promote ${{ inputs.source_commit }} to production [skip ci]"
+          commit_user_name: taskflow-bot
+          commit_user_email: taskflow-bot@users.noreply.github.com
+          file_pattern: deploy/gitops/environments/prod/*.yaml
+      - name: Tag immutable production release
+        id: tag
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="prod-$(date -u +%Y%m%d-%H%M%S)"
+          git fetch --tags
+          git tag -a "$TAG" -m "Production release ${{ inputs.source_commit }}: ${{ inputs.reason }}"
+          git push origin "$TAG"
+          gh release create "$TAG" \
+            --title "Production $TAG" \
+            --notes "Signed digest: ${{ inputs.image_digest }}\nSource: ${{ inputs.source_commit }}\nReason: ${{ inputs.reason }}\nStrategy: Argo Rollouts canary with automated Prometheus analysis."
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"

@@ -1,0 +1,10 @@
+quiet: true
+framework:
+  - kubernetes
+  - terraform
+  - github_actions
+  - dockerfile
+download-external-modules: false
+# No global Kubernetes skip list. When scanning the local lab, exclude only the
+# dev overlay with --skip-path; production and staging manifests stay fully checked.
+compact: true

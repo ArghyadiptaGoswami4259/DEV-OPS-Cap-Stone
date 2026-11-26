@@ -1,0 +1,17 @@
+rules:
+  - id: taskflow-no-shell-true
+    languages: [python]
+    severity: ERROR
+    message: "Avoid shell=True; use an argument list for subprocess calls."
+    pattern: subprocess.$FUNC(..., shell=True, ...)
+  - id: taskflow-no-raw-sql-fstring
+    languages: [python]
+    severity: WARNING
+    message: "Do not build SQL with f-strings; use SQLAlchemy bound parameters."
+    pattern-regex: |
+      f["'].*(SELECT|INSERT|UPDATE|DELETE).*\{
+  - id: taskflow-no-debug-flag
+    languages: [python, javascript]
+    severity: WARNING
+    message: "Debug mode must remain disabled in production code."
+    pattern-regex: '(?i)(debug\s*=\s*true|DEBUG_PROPAGATE_EXCEPTIONS)'

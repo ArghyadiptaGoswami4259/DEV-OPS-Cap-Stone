@@ -1,0 +1,20 @@
+exit-code: 1
+ignorefile: platform/security/.trivyignore.yaml
+severity:
+  - CRITICAL
+  - HIGH
+ignore-unfixed: true
+vulnerability:
+  type:
+    - os
+    - library
+misconfiguration:
+  include-non-failures: false
+secret:
+  enable: true
+scan:
+  skip-dirs:
+    - .git
+    - .venv
+    - .cache
+    - docs/lab-manual

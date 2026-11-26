@@ -1,0 +1,11 @@
+misconfigurations:
+  - id: AWS-0104
+    paths:
+      - "terraform-aws-modules/eks/aws/node_groups.tf"
+      - "**/node_groups.tf"
+    statement: >-
+      Upstream terraform-aws-modules/eks v20.31.0 emits a default unrestricted
+      node egress rule from its own node_groups.tf. This repository restricts
+      its own database egress to the EKS node security group; the upstream
+      module file is not managed here and is reviewed with a dated exception.
+    expired_at: 2027-11-26

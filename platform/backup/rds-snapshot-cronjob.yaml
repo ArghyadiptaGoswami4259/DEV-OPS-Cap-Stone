@@ -1,0 +1,64 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: taskflow-rds-snapshot
+  namespace: taskflow-prod
+spec:
+  schedule: "30 2 * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        metadata:
+          labels:
+            app: taskflow-backup
+        spec:
+          restartPolicy: OnFailure
+          serviceAccountName: taskflow-backup
+          automountServiceAccountToken: true
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            seccompProfile:
+              type: RuntimeDefault
+          containers:
+            - name: aws-cli
+              image: amazon/aws-cli:2.17.62
+              imagePullPolicy: IfNotPresent
+              command: ["/bin/sh", "-c"]
+              args:
+                - >-
+                  aws rds create-db-snapshot
+                  --db-instance-identifier "$DB_INSTANCE_IDENTIFIER"
+                  --db-snapshot-identifier "taskflow-$(date -u +%Y%m%d-%H%M%S)"
+                  --tags Key=Project,Value=taskflow Key=ManagedBy,Value=kubernetes-cronjob
+              env:
+                - name: AWS_REGION
+                  value: ap-south-1
+                - name: AWS_ROLE_ARN
+                  value: arn:aws:iam::111122223333:role/taskflow-backup
+                - name: DB_INSTANCE_IDENTIFIER
+                  value: taskflow-primary
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 96Mi
+                limits:
+                  cpu: 200m
+                  memory: 256Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop: ["ALL"]
+              volumeMounts:
+                - name: tmp
+                  mountPath: /tmp
+          volumes:
+            - name: tmp
+              emptyDir: {}

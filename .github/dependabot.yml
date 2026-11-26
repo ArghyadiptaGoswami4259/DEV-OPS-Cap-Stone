@@ -1,0 +1,32 @@
+version: 2
+updates:
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels: ["dependencies", "python"]
+    groups:
+      python-runtime:
+        patterns: ["fastapi*", "uvicorn*", "sqlalchemy*", "alembic*", "psycopg*", "prometheus-client*"]
+      python-development:
+        patterns: ["pytest*", "ruff*", "mypy*", "httpx*", "pip-audit*"]
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    labels: ["dependencies", "ci"]
+  - package-ecosystem: docker
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    labels: ["dependencies", "container"]
+  - package-ecosystem: terraform
+    directory: "/infra/terraform"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    labels: ["dependencies", "infrastructure"]

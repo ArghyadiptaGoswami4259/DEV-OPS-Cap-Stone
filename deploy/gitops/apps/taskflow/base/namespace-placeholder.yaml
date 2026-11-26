@@ -1,0 +1,8 @@
+# The environment overlays replace this resource with a labelled Namespace.
+# Keeping it in the base makes plain kubectl apply -k reproducible too.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: taskflow-namespace-placeholder
+data:
+  note: "environment overlay supplies the namespace"
