@@ -1,0 +1,18 @@
+title = "TaskFlow secret-scanning configuration"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Ignore documented placeholders and the explicitly local lab-only database password."
+paths = [
+  '''deploy/gitops/environments/dev/.*''',
+  '''docs/lab-manual/assets/.*''',
+  '''.*\.example''',
+  '''.*lab-manual.*\.(pdf|docx)''',
+]
+regexes = [
+  '''REPLACE_WITH_[A-Z0-9_]+''',
+  '''local-lab-only''',
+  '''replace-with-a-random-local-password''',
+]

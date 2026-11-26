@@ -1,0 +1,9 @@
+# Generated academic deliverables and design assets are binary; keep Git diffs clean.
+*.pdf binary
+*.docx binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ttf binary
+*.woff binary
+*.woff2 binary

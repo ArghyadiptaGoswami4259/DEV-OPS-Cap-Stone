@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Local runtime and generated caches
+.cache/
+*.db
+*.sqlite3
+.env
+.env.*
+!.env.example
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+*.tfvars.json
+!*.auto.tfvars.json
+.terraformrc
+terraform.rc
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Build output
+dist/
+build/
+*.log

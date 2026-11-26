@@ -1,0 +1,31 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: taskflow-dev
+resources:
+  - namespace.yaml
+  - ../../apps/taskflow/base
+  - postgres.yaml
+patches:
+  - path: configmap.yaml
+  - path: ingress.yaml
+  - path: hpa-patch.yaml
+  - path: pdb-patch.yaml
+  - path: rollout-json-patch.yaml
+    target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: Rollout
+      name: taskflow
+images:
+  - name: ghcr.io/arghyadiptagoswami4259/dev-ops-cap-stone/taskflow
+    newName: taskflow
+    newTag: local
+generatorOptions:
+  disableNameSuffixHash: true
+secretGenerator:
+  - name: taskflow-db
+    literals:
+      - POSTGRES_DB=taskflow
+      - POSTGRES_USER=taskflow
+      - POSTGRES_PASSWORD=local-lab-only
+      - DATABASE_URL=postgresql+psycopg://taskflow:local-lab-only@taskflow-postgresql:5432/taskflow

@@ -1,0 +1,25 @@
+controller:
+  service:
+    type: NodePort
+    nodePorts:
+      http: 30080
+      https: 30443
+  config:
+    enable-modsecurity: "true"
+    enable-owasp-modsecurity-crs: "true"
+    ssl-redirect: "true"
+    use-forwarded-headers: "true"
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      namespace: monitoring
+      additionalLabels:
+        release: kube-prometheus
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi

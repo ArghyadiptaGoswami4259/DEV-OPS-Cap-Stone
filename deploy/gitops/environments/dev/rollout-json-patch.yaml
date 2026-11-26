@@ -1,0 +1,9 @@
+- op: replace
+  path: /spec/replicas
+  value: 2
+- op: replace
+  path: /spec/strategy/canary/steps/2/analysis/args/0/value
+  value: taskflow-dev
+- op: replace
+  path: /spec/strategy/canary/steps/5/analysis/args/0/value
+  value: taskflow-dev

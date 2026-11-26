@@ -1,0 +1,56 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: taskflow-slo
+  labels:
+    app: taskflow
+    release: kube-prometheus
+spec:
+  groups:
+    - name: taskflow.slo
+      rules:
+        - alert: TaskFlowHighErrorRate
+          expr: |
+            (
+              sum(rate(taskflow_http_requests_total{status=~"5.."}[5m])) or vector(0)
+            ) / clamp_min(
+              (sum(rate(taskflow_http_requests_total[5m])) or vector(0)), 0.001
+            ) > 0.05
+          for: 5m
+          labels:
+            severity: critical
+            slo: availability
+          annotations:
+            summary: "TaskFlow 5xx ratio exceeds the 5% alert threshold"
+            runbook_url: "runbooks/incident-response.md"
+        - alert: TaskFlowHighP95Latency
+          expr: |
+            histogram_quantile(
+              0.95,
+              sum by (le) (rate(taskflow_http_request_duration_seconds_bucket[5m]))
+            ) > 0.5
+          for: 10m
+          labels:
+            severity: warning
+            slo: latency
+          annotations:
+            summary: "TaskFlow p95 latency exceeds 500 ms"
+            runbook_url: "runbooks/incident-response.md"
+        - alert: TaskFlowNotReady
+          expr: min(taskflow_ready) < 1
+          for: 2m
+          labels:
+            severity: critical
+            slo: readiness
+          annotations:
+            summary: "At least one TaskFlow replica reports dependency failure"
+            runbook_url: "runbooks/incident-response.md"
+        - alert: TaskFlowFrequentPodRestarts
+          expr: |
+            increase(kube_pod_container_status_restarts_total{pod=~"taskflow-.*"}[15m]) > 2
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "TaskFlow pods are restarting repeatedly"
+            runbook_url: "runbooks/incident-response.md"

@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: taskflow
+  namespace: argocd
+spec:
+  description: GitOps boundary for the TaskFlow DevOps capstone
+  sourceRepos:
+    - https://github.com/ArghyadiptaGoswami4259/DEV-OPS-Cap-Stone.git
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: taskflow-dev
+    - server: https://kubernetes.default.svc
+      namespace: taskflow-staging
+    - server: https://kubernetes.default.svc
+      namespace: taskflow-prod
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+  namespaceResourceBlacklist:
+    - group: ""
+      kind: ResourceQuota
+    - group: ""
+      kind: LimitRange
+  roles:
+    - name: release-viewer
+      description: Read-only access to application status
+      policies:
+        - p, proj:taskflow:release-viewer, applications, get, taskflow/*, allow
+      groups:
+        - taskflow:readers

@@ -1,0 +1,30 @@
+apiVersion: taskflow.devops/v1
+kind: ReleaseManifest
+metadata:
+  environment: staging
+  annotations:
+    taskflow.devops/state: bootstrap
+spec:
+  image:
+    repository: ghcr.io/arghyadiptagoswami4259/dev-ops-cap-stone/taskflow
+    digest: sha256:0000000000000000000000000000000000000000000000000000000000000000
+    signed: false
+    verifiedBy: pending
+  source:
+    commit: bootstrap
+    workflow: ci
+  approval:
+    required: true
+    approvedBy: pending
+  deployment:
+    strategy: canary
+    minReplicas: 2
+    canaryAnalysis: true
+    automatedRollback: true
+  recovery:
+    backupSchedule: daily
+    rpoMinutes: 60
+    rtoMinutes: 30
+  promotion:
+    timestamp: not-promoted
+    immutable: false

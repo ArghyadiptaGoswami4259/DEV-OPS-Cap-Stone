@@ -1,0 +1,96 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: taskflow-migrate
+  labels:
+    app: taskflow
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  backoffLimit: 3
+  ttlSecondsAfterFinished: 600
+  template:
+    metadata:
+      labels:
+        app: taskflow
+    spec:
+      restartPolicy: Never
+      serviceAccountName: taskflow
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      initContainers:
+        - name: wait-for-database
+          image: ghcr.io/arghyadiptagoswami4259/dev-ops-cap-stone/taskflow:dev
+          imagePullPolicy: IfNotPresent
+          command: ["python", "-c"]
+          args:
+            - |
+              import os
+              import re
+              import socket
+              import time
+
+              url = os.environ.get("DATABASE_URL", "")
+              if url.startswith("sqlite"):
+                  raise SystemExit(0)
+              match = re.search(r"@([^:/]+):(\d+)", url)
+              if not match:
+                  raise SystemExit("DATABASE_URL has no TCP host/port")
+              host, port = match.group(1), int(match.group(2))
+              for _ in range(60):
+                  try:
+                      with socket.create_connection((host, port), 2):
+                          raise SystemExit(0)
+                  except OSError:
+                      time.sleep(2)
+              raise SystemExit("database did not become reachable")
+          envFrom:
+            - configMapRef:
+                name: taskflow-config
+            - secretRef:
+                name: taskflow-db
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      containers:
+        - name: migrations
+          image: ghcr.io/arghyadiptagoswami4259/dev-ops-cap-stone/taskflow:dev
+          imagePullPolicy: IfNotPresent
+          command: ["alembic"]
+          args: ["upgrade", "head"]
+          envFrom:
+            - configMapRef:
+                name: taskflow-config
+            - secretRef:
+                name: taskflow-db
+          resources:
+            requests:
+              cpu: 50m
+              memory: 96Mi
+            limits:
+              cpu: 300m
+              memory: 192Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}

@@ -1,0 +1,23 @@
+name: Platform enhancement
+description: Propose a change to the delivery platform or reference application.
+title: "feat: "
+labels: ["enhancement", "triage"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or opportunity
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed implementation
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Security, reliability and rollback considerations
+    validations:
+      required: true

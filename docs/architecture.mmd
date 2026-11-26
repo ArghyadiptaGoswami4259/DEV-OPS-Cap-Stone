@@ -1,0 +1,12 @@
+flowchart LR
+  A[Developer] --> B[GitHub]
+  B --> C[CI quality and security gates]
+  C --> D[Signed OCI digest]
+  D --> E[GitOps release manifest]
+  E --> F[Argo CD]
+  F --> G[Argo Rollouts canary]
+  G --> H[TaskFlow pods]
+  H --> I[Prometheus / Loki]
+  I --> G
+  J[Terraform] --> K[EKS, RDS, ECR, S3, IRSA]
+  K --> H

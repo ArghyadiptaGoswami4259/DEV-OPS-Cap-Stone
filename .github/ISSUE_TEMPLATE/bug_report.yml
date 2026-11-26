@@ -1,0 +1,41 @@
+name: Platform defect report
+description: Report a reproducible defect in the application or delivery platform.
+title: "fix: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: Include the environment, release digest and correlation ID when available.
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      options: ["local", "dev", "staging", "prod"]
+    validations:
+      required: true
+  - type: input
+    id: release
+    attributes:
+      label: Release version or image digest
+      placeholder: "1.0.0 or sha256:..."
+    validations:
+      required: false
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs or trace ID
+      render: shell
+    validations:
+      required: false

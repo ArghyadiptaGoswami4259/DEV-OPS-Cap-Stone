@@ -1,0 +1,13 @@
+flowchart TD
+  A[Commit] --> B[Pre-commit]
+  B --> C[Pull request]
+  C --> D[Test / lint / SAST / dependency scan]
+  D --> E[Build / image scan / SBOM / sign]
+  E --> F[Staging GitOps promotion]
+  F --> G[Canary analysis]
+  G --> H{Approved production promotion?}
+  H -->|No| I[Stop]
+  H -->|Yes| J[Production canary]
+  J --> K{SLOs pass?}
+  K -->|Yes| L[100% production]
+  K -->|No| M[Automatic abort and rollback]

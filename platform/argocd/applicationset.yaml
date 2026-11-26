@@ -1,0 +1,48 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: taskflow-environments
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - env: dev
+            namespace: taskflow-dev
+          - env: staging
+            namespace: taskflow-staging
+          - env: prod
+            namespace: taskflow-prod
+  template:
+    metadata:
+      name: "taskflow-{{env}}"
+      labels:
+        app.kubernetes.io/part-of: taskflow
+    spec:
+      project: taskflow
+      source:
+        repoURL: https://github.com/ArghyadiptaGoswami4259/DEV-OPS-Cap-Stone.git
+        targetRevision: HEAD
+        path: "deploy/gitops/environments/{{env}}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{namespace}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ApplyOutOfSyncOnly=true
+          - RespectIgnoreDifferences=true
+        retry:
+          limit: 5
+          backoff:
+            duration: 30s
+            factor: 2
+            maxDuration: 5m
+      ignoreDifferences:
+        - group: argoproj.io
+          kind: Rollout
+          jsonPointers:
+            - /spec/replicas
