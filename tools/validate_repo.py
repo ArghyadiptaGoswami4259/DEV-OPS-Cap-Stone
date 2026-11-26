@@ -55,6 +55,7 @@ STUDENT_DETAILS = (
     "Year 2023-2027",
     "Dev Ops and Automation",
 )
+REPOSITORY_URL = "https://github.com/ArghyadiptaGoswami4259/DEV-OPS-Cap-Stone"
 
 REQUIRED = (
     "README.md",
@@ -247,6 +248,7 @@ def check_lab_manual(errors: list[str]) -> None:
         "**Submitted by:** Arghyadipta Goswami (Roll 2301010192)",
         "**Section:** C | **Year:** 2023-2027",
         "**Subject:** Dev Ops and Automation",
+        f"**Repository:** [{REPOSITORY_URL}]({REPOSITORY_URL})",
     )
     for detail in md_requirements:
         if detail not in md_text:
@@ -277,6 +279,8 @@ def check_lab_manual(errors: list[str]) -> None:
         for forbidden in FORBIDDEN_MANUAL_TEXT:
             if forbidden in lowered:
                 errors.append(f"lab manual {label} contains forbidden template content: {forbidden}")
+        if REPOSITORY_URL not in text:
+            errors.append(f"lab manual {label} is missing repository link: {REPOSITORY_URL}")
         if label != "Markdown":
             for detail in STUDENT_DETAILS:
                 if detail not in text:

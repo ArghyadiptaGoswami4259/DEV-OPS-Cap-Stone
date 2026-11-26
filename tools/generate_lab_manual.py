@@ -18,7 +18,15 @@ from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from docx.shared import Inches, Pt, RGBColor
 from generate_diagrams import main as generate_diagrams
-from lab_manual_data import APPENDICES, EXPERIMENTS, FOOTER_TITLE, RUNNING_HEADER, STUDENT, SUBJECT
+from lab_manual_data import (
+    APPENDICES,
+    EXPERIMENTS,
+    FOOTER_TITLE,
+    REPOSITORY_URL,
+    RUNNING_HEADER,
+    STUDENT,
+    SUBJECT,
+)
 from PIL import Image as PILImage
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_CENTER
@@ -236,6 +244,10 @@ def draw_cover(canvas, doc) -> None:  # noqa: ANN001
     canvas.drawCentredString(306, 264, STUDENT["department"])
     canvas.drawCentredString(306, 244, STUDENT["school"])
     canvas.drawCentredString(306, 224, STUDENT["address"])
+    canvas.setFillColor(ACCENT)
+    canvas.setFont("Helvetica", 8.6)
+    canvas.drawCentredString(306, 204, f"Repository: {REPOSITORY_URL}")
+    canvas.linkURL(REPOSITORY_URL, (93.6, 196, 518.4, 212), relative=0, thickness=0)
     canvas.restoreState()
 
 
@@ -427,7 +439,8 @@ def write_markdown(toc_map: dict[str, int]) -> None:
         f"**Section:** {STUDENT['section']} | **Year:** {STUDENT['year']}<br>",
         f"**Subject:** {SUBJECT}<br>",
         f"**Degree:** {STUDENT['degree']} ({STUDENT['program']})<br>",
-        f"**University:** {STUDENT['university']}",
+        f"**University:** {STUDENT['university']}<br>",
+        f"**Repository:** [{REPOSITORY_URL}]({REPOSITORY_URL})",
         "",
         "---",
         "",
@@ -600,6 +613,7 @@ def docx_cover(doc: Document) -> None:
     doc.add_paragraph(STUDENT["department"], style="CoverBold")
     doc.add_paragraph(STUDENT["school"], style="CoverBold")
     doc.add_paragraph(STUDENT["address"], style="CoverBold")
+    doc.add_paragraph(f"Repository: {REPOSITORY_URL}", style="CoverItalic")
 
 
 def docx_toc(doc: Document, toc_map: dict[str, int]) -> None:

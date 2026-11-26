@@ -8,7 +8,9 @@ The generated deliverables are:
 - `assets/university-logo.png` - the institutional emblem extracted from the supplied design.
 
 The cover carries the exact requested details: Name `Arghyadipta Goswami`, Roll `2301010192`,
-Section `C`, Year `2023-2027` and Subject `Dev Ops and Automation`. `tools/validate_repo.py`
+Section `C`, Year `2023-2027` and Subject `Dev Ops and Automation`. It also links to the project
+repository at <https://github.com/ArghyadiptaGoswami4259/DEV-OPS-Cap-Stone>. The PDF cover link is
+clickable, and the Markdown and DOCX versions contain the same URL. `tools/validate_repo.py`
 re-checks those details in every generated format and rejects copied template text.
 
 `tools/generate_lab_manual.py` and `tools/lab_manual_data.py` contain only original DevOps

@@ -7,6 +7,7 @@ procedure, code extract, figure and expected result below is original capstone c
 SUBJECT = "Dev Ops and Automation"
 RUNNING_HEADER = "Dev Ops and Automation"
 FOOTER_TITLE = "Dev Ops and Automation Lab Manual"
+REPOSITORY_URL = "https://github.com/ArghyadiptaGoswami4259/DEV-OPS-Cap-Stone"
 STUDENT = {
     "name": "Arghyadipta Goswami",
     "roll": "2301010192",

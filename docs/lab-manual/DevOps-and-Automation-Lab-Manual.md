@@ -6,7 +6,8 @@
 **Section:** C | **Year:** 2023-2027<br>
 **Subject:** Dev Ops and Automation<br>
 **Degree:** BACHELOR OF TECHNOLOGY (CSE)<br>
-**University:** K.R. Mangalam University
+**University:** K.R. Mangalam University<br>
+**Repository:** [https://github.com/ArghyadiptaGoswami4259/DEV-OPS-Cap-Stone](https://github.com/ArghyadiptaGoswami4259/DEV-OPS-Cap-Stone)
 
 ---
 

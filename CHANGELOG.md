@@ -6,6 +6,8 @@ Keep a Changelog, and this project follows Semantic Versioning.
 ## [Unreleased]
 
 ### Added
+- A clickable GitHub repository link on the lab manual cover and matching repository links in the
+  DOCX and Markdown deliverables.
 - `config/platform.env` plus `make configure` / `make configure-check` for deterministic,
   self-configuring Terraform backends, GitOps overlays, backup ARNs, DNS names, certificate email
   and observability values.
@@ -26,6 +28,8 @@ Keep a Changelog, and this project follows Semantic Versioning.
 - Validate GHCR repositories by parsed hostname in the release gate and remove an invalid
   `pip --require-hashes=false` flag from the container build.
 - Resolve CodeQL import and empty-exception advisories in the application and runtime checker.
+- Align PyYAML 6.0.3 with the Kubernetes client so `make install` resolves development and
+  optional platform-tool dependencies together.
 - Harden Terraform state and backup buckets with customer-managed KMS keys, restrict database
   egress to EKS nodes, and make the development PostgreSQL container use a read-only root
   filesystem with writable ephemeral directories.
