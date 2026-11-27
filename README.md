@@ -11,6 +11,18 @@ observability and recoverability. The same repository contains the generated aca
 > The attached IPCV PDF was used **only** as a visual template for the lab manual. All technical
 > content, experiments, code, diagrams and outputs in this repository are original.
 
+## Quick links
+
+- **GitHub repository:** <https://github.com/ArghyadiptaGoswami4259/DEV-OPS-Cap-Stone>
+- **Full capstone PDF:** [DevOps-and-Automation-Lab-Manual.pdf](docs/lab-manual/DevOps-and-Automation-Lab-Manual.pdf)
+  - 39 pages, template-styled, with the repository link and all 14 implementation screenshots.
+- **Screenshots-only PDF:** [Implementation-Evidence-Screenshots.pdf](docs/implementation-showcase/Implementation-Evidence-Screenshots.pdf)
+  - 15 pages containing every Appendix C screenshot.
+- **Interactive evidence showcase:** [index.html](docs/implementation-showcase/index.html).
+- **Local previews:** TaskFlow app on port `8010` and the evidence gallery on port `8011`.
+  Outside Arena these are `http://localhost:8010` and `http://localhost:8011`; Arena supplies
+  port-specific `*.e2b.app` preview hosts for the same `0.0.0.0` bindings.
+
 ## What is included
 
 | Area | Delivered |

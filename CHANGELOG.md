@@ -6,6 +6,8 @@ Keep a Changelog, and this project follows Semantic Versioning.
 ## [Unreleased]
 
 ### Added
+- Quick links in `README.md` for the repository, full capstone PDF, screenshots-only PDF,
+  interactive evidence gallery and local preview ports.
 - A clickable GitHub repository link on the lab manual cover and matching repository links in the
   DOCX and Markdown deliverables.
 - Appendix C with 14 local-host implementation screenshots, a standalone screenshots-only PDF,
