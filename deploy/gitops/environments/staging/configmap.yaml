@@ -5,5 +5,5 @@ metadata:
 data:
   APP_ENVIRONMENT: staging
   APP_VERSION: 1.0.0
-  APP_GIT_SHA: 5130b468a5fe
+  APP_GIT_SHA: 5868ed62d793
   APP_FAILURE_RATE: '0'
