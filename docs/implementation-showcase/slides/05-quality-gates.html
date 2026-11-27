@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Local quality and validation gates</title>
+  <link rel="stylesheet" href="../assets/showcase.css">
+</head>
+<body>
+  <section class="slide">
+    <div class="header">
+      <div>
+        <div class="eyebrow">TaskFlow DevOps capstone · Local host evidence</div>
+        <h1>Local quality and validation gates</h1>
+        <p class="subtitle">Commands executed locally from the repository root; compact output is shown.</p>
+      </div>
+      <div class="slide-no">Slide 3 / 12</div>
+    </div>
+    <div class="content"><div class="grid2"><div class="card"><h3>Configuration sync</h3><span class="badge ok">PASS</span><pre class="terminal">make configure-check
+
+make[1]: Entering directory &#x27;/home/user/DEV-OPS-Cap-Stone&#x27;
+Platform configuration is synchronized.
+make[1]: Leaving directory &#x27;/home/user/DEV-OPS-Cap-Stone&#x27;</pre></div><div class="card"><h3>Repository validation</h3><span class="badge ok">PASS</span><pre class="terminal">make validate
+
+make[1]: Entering directory &#x27;/home/user/DEV-OPS-Cap-Stone&#x27;
+Platform configuration is synchronized.
+Repository validation passed: required files, Python/shell, YAML/JSON/HCL, Kustomize references, action pins, secrets, platform configuration and lab-manual content.
+make[1]: Leaving directory &#x27;/home/user/DEV-OPS-Cap-Stone&#x27;</pre></div><div class="card"><h3>Lint / types / SAST / audit</h3><span class="badge ok">PASS</span><pre class="terminal">make lint
+
+		Undefined: 0
+		Low: 1
+		Medium: 0
+		High: 0
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 0
+		Medium: 0
+		High: 1
+Files skipped (0):
+Repository validation passed: required files, Python/shell, YAML/JSON/HCL, Kustomize references, action pins, secrets, platform configuration and lab-manual content.
+make[1]: Leaving directory &#x27;/home/user/DEV-OPS-Cap-Stone&#x27;
+[main]	INFO	profile include tests: None
+[main]	INFO	profile exclude tests: None
+[main]	INFO	cli include tests: None
+[main]	INFO	cli exclude tests: None
+[main]	INFO	running on Python 3.11.2
+No known vulnerabilities found</pre></div><div class="card"><h3>Unit and API tests</h3><span class="badge ok">PASS</span><pre class="terminal">make test
+
+make[1]: Entering directory &#x27;/home/user/DEV-OPS-Cap-Stone&#x27;
+...........                                                              [100%]
+11 passed in 0.31s
+make[1]: Leaving directory &#x27;/home/user/DEV-OPS-Cap-Stone&#x27;</pre></div></div></div>
+    <div class="footer">
+      <span>Branch arena/17ac59ad-dev-ops-cap-stone · Commit cc4509e</span>
+      <span>https://github.com/ArghyadiptaGoswami4259/DEV-OPS-Cap-Stone · Generated 2026-11-27 00:05 UTC</span>
+    </div>
+  </section>
+</body>
+</html>

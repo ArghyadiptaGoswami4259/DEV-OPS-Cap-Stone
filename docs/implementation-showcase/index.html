@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TaskFlow Implementation Showcase</title>
+  <link rel="stylesheet" href="assets/index.css">
+</head>
+<body>
+<header>
+  <div class="eyebrow">Dev Ops and Automation · Local host evidence</div>
+  <h1>TaskFlow Implementation Showcase</h1>
+  <p>Every major implemented area is shown below with captured screenshots from the running
+  local host, the generated diagrams, local validation gates and GitHub Actions.</p>
+  <div class="actions">
+    <button id="open-app">Open live TaskFlow app</button>
+    <a href="DevOps-and-Automation-Lab-Manual.pdf">Full lab manual PDF</a>
+    <a href="Implementation-Evidence-Screenshots.pdf">Screenshots-only PDF</a>
+    <a href="https://github.com/ArghyadiptaGoswami4259/DEV-OPS-Cap-Stone" target="_blank" rel="noreferrer">GitHub repository</a>
+  </div>
+</header>
+<main>
+  <h2>Implemented inventory</h2>
+  <div class="cards"><div class="card"><h3>Application and API</h3><p><strong>33</strong> files<br><span>app/__init__.py, app/__main__.py, app/__pycache__/__init__.cpython-311.pyc, tests/__pycache__/conftest.cpython-311-pytest-8.3.4.pyc</span></p></div><div class="card"><h3>Local runtime and containers</h3><p><strong>5</strong> files<br><span>Dockerfile, docker-compose.yml, tools/build_local_runtime.py, tools/local-cluster.sh</span></p></div><div class="card"><h3>CI/CD and release gates</h3><p><strong>5</strong> files<br><span>.github/workflows/cd.yml, .github/workflows/ci.yml, .github/workflows/promote.yml, tools/verify_release.py</span></p></div><div class="card"><h3>Terraform infrastructure</h3><p><strong>11</strong> files<br><span>infra/terraform/backend.hcl.example, infra/terraform/bootstrap/main.tf, infra/terraform/environments/dev.backend.hcl</span></p></div><div class="card"><h3>Kubernetes and GitOps</h3><p><strong>49</strong> files<br><span>deploy/gitops/apps/taskflow/base/analysis-template.yaml, deploy/gitops/apps/taskflow/base/configmap.yaml, deploy/gitops/apps/taskflow/base/hpa.yaml</span></p></div><div class="card"><h3>Platform controls</h3><p><strong>35</strong> files<br><span>platform/argo-rollouts-values.yaml, platform/argocd/applicationset.yaml, platform/argocd/argocd-values.yaml</span></p></div><div class="card"><h3>Runbooks and recovery</h3><p><strong>9</strong> files<br><span>runbooks/dr-restore.md, runbooks/incident-response.md, runbooks/pipeline-failure.md, platform/backup/README.md</span></p></div><div class="card"><h3>Documentation and manual</h3><p><strong>73</strong> files<br><span>docs/architecture.md, docs/architecture.mmd, docs/branching.md, README.md</span></p></div></div>
+  <h2>All screenshots</h2>
+  <div class="gallery"><figure><a href="screenshots/01-template-cover.png"><img src="screenshots/01-template-cover.png" alt="Template-styled capstone cover"></a><figcaption><strong>Template-styled capstone cover</strong><span>The requested cover design, student metadata and clickable repository link.</span></figcaption></figure><figure><a href="screenshots/02-live-application.png"><img src="screenshots/02-live-application.png" alt="TaskFlow on the local host"></a><figcaption><strong>TaskFlow on the local host</strong><span>Live browser UI on 0.0.0.0:8010 with health, release identity and task CRUD.</span></figcaption></figure><figure><a href="screenshots/03-live-api-evidence.png"><img src="screenshots/03-live-api-evidence.png" alt="Live API and response headers"></a><figcaption><strong>Live API and response headers</strong><span>Actual local-host responses for health, readiness, metadata, tasks and metrics.</span></figcaption></figure><figure><a href="screenshots/04-api-contract.png"><img src="screenshots/04-api-contract.png" alt="OpenAPI contract and routes"></a><figcaption><strong>OpenAPI contract and routes</strong><span>Generated OpenAPI 3.1 contract showing the implemented TaskFlow operations.</span></figcaption></figure><figure><a href="screenshots/05-quality-gates.png"><img src="screenshots/05-quality-gates.png" alt="Local quality and validation gates"></a><figcaption><strong>Local quality and validation gates</strong><span>Configuration sync, repository validation, lint, typing, SAST, audit and tests.</span></figcaption></figure><figure><a href="screenshots/06-github-actions.png"><img src="screenshots/06-github-actions.png" alt="GitHub Actions delivery run"></a><figcaption><strong>GitHub Actions delivery run</strong><span>Successful push-triggered CI run with quality, security and signed-image jobs.</span></figcaption></figure><figure><a href="screenshots/07-implementation-inventory.png"><img src="screenshots/07-implementation-inventory.png" alt="Implemented component inventory"></a><figcaption><strong>Implemented component inventory</strong><span>Repository-wide inventory of application, runtime, CI/CD, infrastructure and controls.</span></figcaption></figure><figure><a href="screenshots/08-architecture-diagrams.png"><img src="screenshots/08-architecture-diagrams.png" alt="Architecture and evidence diagrams"></a><figcaption><strong>Architecture and evidence diagrams</strong><span>All ten generated diagrams covering architecture, delivery, security and canary flow.</span></figcaption></figure><figure><a href="screenshots/09-ci-cd-workflows.png"><img src="screenshots/09-ci-cd-workflows.png" alt="CI/CD and promotion workflows"></a><figcaption><strong>CI/CD and promotion workflows</strong><span>Pinned GitHub Actions jobs for CI, staging CD and production promotion.</span></figcaption></figure><figure><a href="screenshots/10-terraform-gitops.png"><img src="screenshots/10-terraform-gitops.png" alt="Terraform and GitOps inventory"></a><figcaption><strong>Terraform and GitOps inventory</strong><span>AWS resources, environment overlays, bootstrap state and hardened delivery manifests.</span></figcaption></figure><figure><a href="screenshots/11-security-supply-chain.png"><img src="screenshots/11-security-supply-chain.png" alt="Security and supply-chain controls"></a><figcaption><strong>Security and supply-chain controls</strong><span>Secret scanning, SAST, IaC/image scans, policy, SBOM and keyless image signing.</span></figcaption></figure><figure><a href="screenshots/12-observability-backup.png"><img src="screenshots/12-observability-backup.png" alt="Observability, SLO and recovery"></a><figcaption><strong>Observability, SLO and recovery</strong><span>Prometheus, Grafana, Loki, Alertmanager, SLO, backup, restore and runbooks.</span></figcaption></figure><figure><a href="screenshots/13-local-runtime-release.png"><img src="screenshots/13-local-runtime-release.png" alt="Local runtime and release gates"></a><figcaption><strong>Local runtime and release gates</strong><span>Documented Docker-independent runtime evidence plus bootstrap and strict release gates.</span></figcaption></figure><figure><a href="screenshots/14-implementation-gallery.png"><img src="screenshots/14-implementation-gallery.png" alt="Complete implementation evidence gallery"></a><figcaption><strong>Complete implementation evidence gallery</strong><span>Single-page index of every screenshot embedded in Appendix C of the PDF.</span></figcaption></figure></div>
+  <h2>Reproduce</h2>
+  <div class="card">
+    <p><code>make evidence</code> captures the screenshots and regenerates the PDF/DOCX/MD.
+    <code>make evidence-showcase</code> serves this page on <code>0.0.0.0:8011</code>.
+    The live app uses <code>0.0.0.0:8010</code> in this workspace.</p>
+  </div>
+</main>
+<footer>
+  Branch arena/17ac59ad-dev-ops-cap-stone · Commit cc4509e ·
+  Generated 2026-11-27 00:05 UTC · https://github.com/ArghyadiptaGoswami4259/DEV-OPS-Cap-Stone
+</footer>
+<script>
+document.getElementById('open-app').addEventListener('click', function () {
+  const host = window.location.hostname.replace(/^8011-/, '8010-');
+  window.open(window.location.protocol + '//' + host + '/', '_blank');
+});
+</script>
+</body>
+</html>

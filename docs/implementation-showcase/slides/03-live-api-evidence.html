@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Live API and response headers</title>
+  <link rel="stylesheet" href="../assets/showcase.css">
+</head>
+<body>
+  <section class="slide">
+    <div class="header">
+      <div>
+        <div class="eyebrow">TaskFlow DevOps capstone · Local host evidence</div>
+        <h1>Live API and response headers</h1>
+        <p class="subtitle">Responses sampled from the running local TaskFlow host immediately before capture.</p>
+      </div>
+      <div class="slide-no">Slide 1 / 12</div>
+    </div>
+    <div class="content"><div class="hero"><div class="card"><h2>Endpoint evidence</h2><pre class="json">{
+  &quot;GET /healthz&quot;: {
+    &quot;status&quot;: &quot;ok&quot;,
+    &quot;service&quot;: &quot;TaskFlow&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;commit&quot;: &quot;cc4509e&quot;,
+    &quot;environment&quot;: &quot;local&quot;
+  },
+  &quot;GET /readyz&quot;: {
+    &quot;status&quot;: &quot;ready&quot;,
+    &quot;database&quot;: &quot;ok&quot;
+  },
+  &quot;GET /api/v1/info&quot;: {
+    &quot;service&quot;: &quot;TaskFlow&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;commit&quot;: &quot;cc4509e&quot;,
+    &quot;environment&quot;: &quot;local&quot;,
+    &quot;otel_service_name&quot;: &quot;taskflow&quot;
+  },
+  &quot;GET /api/v1/tasks&quot;: {
+    &quot;total&quot;: 4,
+    &quot;items&quot;: [
+      {
+        &quot;id&quot;: &quot;060124ad-75da-49ab-8e06-7737ffa34b53&quot;,
+        &quot;title&quot;: &quot;Exercise rollback runbook&quot;,
+        &quot;description&quot;: &quot;Abort a failed rollout and restore the stable ReplicaSet.&quot;,
+        &quot;status&quot;: &quot;in_progress&quot;,
+        &quot;created_at&quot;: &quot;2026-11-27T00:06:08&quot;,
+        &quot;updated_at&quot;: &quot;2026-11-27T00:06:08&quot;
+      },
+      {
+        &quot;id&quot;: &quot;1bcc1272-23bf-46fe-9ada-f8a6cade72c6&quot;,
+        &quot;title&quot;: &quot;Verify canary analysis&quot;,
+        &quot;description&quot;: &quot;Confirm Prometheus gates before production promotion.&quot;,
+        &quot;status&quot;: &quot;in_progress&quot;,
+        &quot;created_at&quot;: &quot;2026-11-27T00:06:08&quot;,
+        &quot;updated_at&quot;: &quot;2026-11-27T00:06:08&quot;
+      },
+      {
+        &quot;id&quot;: &quot;6e61c732-1f4a-441c-9408-d2eeb904fb3c&quot;,
+        &quot;title&quot;: &quot;Review signed image digest&quot;,
+        &quot;description&quot;: &quot;Check Cosign keyless signature and Rekor evidence.&quot;,
+        &quot;status&quot;: &quot;done&quot;,
+        &quot;created_at&quot;: &quot;2026-11-27T00:06:08&quot;,
+        &quot;updated_at&quot;: &quot;2026-11-27T00:06:08&quot;
+      }
+    ]
+  },
+  &quot;task CRUD&quot;: {
+    &quot;post&quot;: 201,
+    &quot;patch&quot;: 200,
+    &quot;delete&quot;: 204,
+    &quot;get&quot;: 200
+  },
+  &quot;selected response headers&quot;: {
+    &quot;x-request-id&quot;: &quot;850acd84a2e29d18&quot;,
+    &quot;x-trace-id&quot;: &quot;64d72286d51aeee71be42d7cb37b2df8&quot;,
+    &quot;traceparent&quot;: &quot;00-64d72286d51aeee71be42d7cb37b2df8-850acd84a2e29d18-01&quot;,
+    &quot;x-content-type-options&quot;: &quot;nosniff&quot;,
+    &quot;x-frame-options&quot;: &quot;not present&quot;,
+    &quot;referrer-policy&quot;: &quot;no-referrer&quot;,
+    &quot;content-security-policy&quot;: &quot;default-src &#x27;self&#x27;; base-uri &#x27;self&#x27;; form-action &#x27;self&#x27;; style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27;; script-src &#x27;self&#x27; &#x27;unsafe-inline&#x27;; connect-src &#x27;self&#x27;; img-src &#x27;self&#x27; data:; object-src &#x27;none&#x27;&quot;,
+    &quot;strict-transport-security&quot;: &quot;not present&quot;
+  },
+  &quot;taskflow metrics sample&quot;: [
+    &quot;taskflow_http_requests_total{method=\&quot;GET\&quot;,route=\&quot;/\&quot;,status=\&quot;200\&quot;} 1.0&quot;,
+    &quot;taskflow_http_requests_total{method=\&quot;GET\&quot;,route=\&quot;/api/v1/tasks\&quot;,status=\&quot;200\&quot;} 3.0&quot;,
+    &quot;taskflow_http_requests_total{method=\&quot;POST\&quot;,route=\&quot;/api/v1/tasks\&quot;,status=\&quot;201\&quot;} 5.0&quot;,
+    &quot;taskflow_http_requests_total{method=\&quot;PATCH\&quot;,route=\&quot;/api/v1/tasks/{task_id}\&quot;,status=\&quot;200\&quot;} 1.0&quot;,
+    &quot;taskflow_http_requests_total{method=\&quot;DELETE\&quot;,route=\&quot;/api/v1/tasks/{task_id}\&quot;,status=\&quot;204\&quot;} 1.0&quot;
+  ]
+}</pre></div><div><div class="card"><div class="meta">Live checks</div><h2>Health and readiness</h2><p>healthz: <code>ok</code><br>readyz: <code>ready</code><br>database: <code>ok</code></p></div><div class="card"><div class="meta">Task API</div><h2>CRUD status codes</h2><p>POST <code>201</code> · PATCH <code>200</code> · DELETE <code>204</code> · GET <code>200</code></p></div><div class="card"><div class="meta">Middleware</div><h2>Trace and security headers</h2><p>Request ID, trace ID, W3C traceparent, nosniff, frame options, referrer policy and CSP are shown in the JSON panel.</p></div></div></div></div>
+    <div class="footer">
+      <span>Branch arena/17ac59ad-dev-ops-cap-stone · Commit cc4509e</span>
+      <span>https://github.com/ArghyadiptaGoswami4259/DEV-OPS-Cap-Stone · Generated 2026-11-27 00:05 UTC</span>
+    </div>
+  </section>
+</body>
+</html>

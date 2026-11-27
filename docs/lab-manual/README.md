@@ -5,10 +5,14 @@ The generated deliverables are:
 - `DevOps-and-Automation-Lab-Manual.pdf` - primary print/PDF deliverable with exact page numbers.
 - `DevOps-and-Automation-Lab-Manual.docx` - editable Word version with the same layout.
 - `DevOps-and-Automation-Lab-Manual.md` - plain-text source for review and diffing.
+- `../implementation-showcase/Implementation-Evidence-Screenshots.pdf` - direct screenshots-only
+  companion PDF.
 - `assets/university-logo.png` - the institutional emblem extracted from the supplied design.
 
 The cover carries the exact requested details: Name `Arghyadipta Goswami`, Roll `2301010192`,
-Section `C`, Year `2023-2027` and Subject `Dev Ops and Automation`. `tools/validate_repo.py`
+Section `C`, Year `2023-2027` and Subject `Dev Ops and Automation`. It also links to the project
+repository at <https://github.com/ArghyadiptaGoswami4259/DEV-OPS-Cap-Stone>. The PDF cover link is
+clickable, and the Markdown and DOCX versions contain the same URL. `tools/validate_repo.py`
 re-checks those details in every generated format and rejects copied template text.
 
 `tools/generate_lab_manual.py` and `tools/lab_manual_data.py` contain only original DevOps
@@ -18,7 +22,12 @@ italic running header, grey footer with page number, blue section headings, ligh
 panels and bordered output tables. No IPCV experiment text, programs, outputs or figures were
 copied.
 
-Regenerate all three formats with:
+Appendix C contains all local-host implementation screenshots, also available as a separate
+direct PDF. The full manual, DOCX, Markdown and screenshots-only PDF are produced together.
+To recapture the live evidence first, run `make evidence`; to serve the interactive gallery,
+run `make evidence-showcase`.
+
+Regenerate all formats from the committed screenshots with:
 
 ```bash
 make lab-manual

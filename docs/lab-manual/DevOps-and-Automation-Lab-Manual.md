@@ -6,7 +6,8 @@
 **Section:** C | **Year:** 2023-2027<br>
 **Subject:** Dev Ops and Automation<br>
 **Degree:** BACHELOR OF TECHNOLOGY (CSE)<br>
-**University:** K.R. Mangalam University
+**University:** K.R. Mangalam University<br>
+**Repository:** [https://github.com/ArghyadiptaGoswami4259/DEV-OPS-Cap-Stone](https://github.com/ArghyadiptaGoswami4259/DEV-OPS-Cap-Stone)
 
 ---
 
@@ -24,6 +25,7 @@
 - Experiment 10: Canary Delivery, Rollback and Disaster Recovery ... 21
 - Appendix A: Command Reference and Evidence Checklist ... 23
 - Appendix B: Viva-Voce Preparation and Production Gate ... 24
+- Appendix C: Local Host Implementation Evidence Screenshots ... 25
 
 ---
 
@@ -806,5 +808,147 @@ Gate: python tools/verify_release.py --environment prod
 Evidence: signed digest + Git SHA + AnalysisRun + dashboard + backup record
 Outcome: approved immutable release, or automatic abort on SLO breach
 ```
+
+---
+
+## Appendix C: Local Host Implementation Evidence Screenshots
+
+The screenshots were captured from the running local TaskFlow host, the generated implementation showcase and the verified GitHub Actions run. They provide visual evidence for every major area implemented in the capstone.
+
+### What is shown
+
+- The live TaskFlow UI, REST responses, OpenAPI contract and security/trace headers.
+- Local quality gates, repository validation, tests and release-gate behavior.
+- GitHub Actions quality, security, container scanning, SBOM and keyless signing.
+- The application, tools, Terraform, GitOps, observability, security, backup and runbook inventory.
+- All ten generated architecture/evidence diagrams and a complete screenshot gallery.
+
+### How to reproduce
+
+- Start the app with HOST=0.0.0.0 PORT=8010 and a disposable SQLite database.
+- Run make evidence to capture local screenshots and regenerate this manual.
+- Run make evidence-showcase to serve the interactive screenshot gallery.
+- Use the standalone implementation-evidence PDF for a screenshots-only copy.
+
+### Quick Reference
+
+```text
+make evidence
+make lab-manual
+make evidence-showcase
+Open docs/implementation-showcase/Implementation-Evidence-Screenshots.pdf
+```
+
+### Figure C.1 - Template-styled capstone cover
+
+![The requested cover design, student metadata and clickable repository link.](../implementation-showcase/screenshots/01-template-cover.png)
+
+*The requested cover design, student metadata and clickable repository link.*
+
+---
+
+### Figure C.2 - TaskFlow on the local host
+
+![Live browser UI on 0.0.0.0:8010 with health, release identity and task CRUD.](../implementation-showcase/screenshots/02-live-application.png)
+
+*Live browser UI on 0.0.0.0:8010 with health, release identity and task CRUD.*
+
+---
+
+### Figure C.3 - Live API and response headers
+
+![Actual local-host responses for health, readiness, metadata, tasks and metrics.](../implementation-showcase/screenshots/03-live-api-evidence.png)
+
+*Actual local-host responses for health, readiness, metadata, tasks and metrics.*
+
+---
+
+### Figure C.4 - OpenAPI contract and routes
+
+![Generated OpenAPI 3.1 contract showing the implemented TaskFlow operations.](../implementation-showcase/screenshots/04-api-contract.png)
+
+*Generated OpenAPI 3.1 contract showing the implemented TaskFlow operations.*
+
+---
+
+### Figure C.5 - Local quality and validation gates
+
+![Configuration sync, repository validation, lint, typing, SAST, audit and tests.](../implementation-showcase/screenshots/05-quality-gates.png)
+
+*Configuration sync, repository validation, lint, typing, SAST, audit and tests.*
+
+---
+
+### Figure C.6 - GitHub Actions delivery run
+
+![Successful push-triggered CI run with quality, security and signed-image jobs.](../implementation-showcase/screenshots/06-github-actions.png)
+
+*Successful push-triggered CI run with quality, security and signed-image jobs.*
+
+---
+
+### Figure C.7 - Implemented component inventory
+
+![Repository-wide inventory of application, runtime, CI/CD, infrastructure and controls.](../implementation-showcase/screenshots/07-implementation-inventory.png)
+
+*Repository-wide inventory of application, runtime, CI/CD, infrastructure and controls.*
+
+---
+
+### Figure C.8 - Architecture and evidence diagrams
+
+![All ten generated diagrams covering architecture, delivery, security and canary flow.](../implementation-showcase/screenshots/08-architecture-diagrams.png)
+
+*All ten generated diagrams covering architecture, delivery, security and canary flow.*
+
+---
+
+### Figure C.9 - CI/CD and promotion workflows
+
+![Pinned GitHub Actions jobs for CI, staging CD and production promotion.](../implementation-showcase/screenshots/09-ci-cd-workflows.png)
+
+*Pinned GitHub Actions jobs for CI, staging CD and production promotion.*
+
+---
+
+### Figure C.10 - Terraform and GitOps inventory
+
+![AWS resources, environment overlays, bootstrap state and hardened delivery manifests.](../implementation-showcase/screenshots/10-terraform-gitops.png)
+
+*AWS resources, environment overlays, bootstrap state and hardened delivery manifests.*
+
+---
+
+### Figure C.11 - Security and supply-chain controls
+
+![Secret scanning, SAST, IaC/image scans, policy, SBOM and keyless image signing.](../implementation-showcase/screenshots/11-security-supply-chain.png)
+
+*Secret scanning, SAST, IaC/image scans, policy, SBOM and keyless image signing.*
+
+---
+
+### Figure C.12 - Observability, SLO and recovery
+
+![Prometheus, Grafana, Loki, Alertmanager, SLO, backup, restore and runbooks.](../implementation-showcase/screenshots/12-observability-backup.png)
+
+*Prometheus, Grafana, Loki, Alertmanager, SLO, backup, restore and runbooks.*
+
+---
+
+### Figure C.13 - Local runtime and release gates
+
+![Documented Docker-independent runtime evidence plus bootstrap and strict release gates.](../implementation-showcase/screenshots/13-local-runtime-release.png)
+
+*Documented Docker-independent runtime evidence plus bootstrap and strict release gates.*
+
+---
+
+### Figure C.14 - Complete implementation evidence gallery
+
+![Single-page index of every screenshot embedded in Appendix C of the PDF.](../implementation-showcase/screenshots/14-implementation-gallery.png)
+
+*Single-page index of every screenshot embedded in Appendix C of the PDF.*
+
+---
 
 ---

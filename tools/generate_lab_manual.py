@@ -18,7 +18,16 @@ from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from docx.shared import Inches, Pt, RGBColor
 from generate_diagrams import main as generate_diagrams
-from lab_manual_data import APPENDICES, EXPERIMENTS, FOOTER_TITLE, RUNNING_HEADER, STUDENT, SUBJECT
+from lab_manual_data import (
+    APPENDICES,
+    EXPERIMENTS,
+    FOOTER_TITLE,
+    IMPLEMENTATION_SCREENSHOTS,
+    REPOSITORY_URL,
+    RUNNING_HEADER,
+    STUDENT,
+    SUBJECT,
+)
 from PIL import Image as PILImage
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_CENTER
@@ -35,6 +44,7 @@ from reportlab.platypus import (
     PageTemplate,
     Paragraph,
     Preformatted,
+    SimpleDocTemplate,
     Spacer,
     Table,
     TableStyle,
@@ -48,6 +58,8 @@ LAB_DIR = ROOT / "docs" / "lab-manual"
 PDF_PATH = LAB_DIR / "DevOps-and-Automation-Lab-Manual.pdf"
 DOCX_PATH = LAB_DIR / "DevOps-and-Automation-Lab-Manual.docx"
 MD_PATH = LAB_DIR / "DevOps-and-Automation-Lab-Manual.md"
+SHOWCASE_DIR = ROOT / "docs" / "implementation-showcase"
+EVIDENCE_PDF_PATH = SHOWCASE_DIR / "Implementation-Evidence-Screenshots.pdf"
 LOGO = LAB_DIR / "assets" / "university-logo.png"
 
 BLUE = colors.HexColor("#1B4F72")
@@ -136,6 +148,11 @@ def pdf_styles() -> dict[str, ParagraphStyle]:
         "AppendixTitle": ParagraphStyle(
             "AppendixTitle", parent=base["Normal"], fontName="Helvetica-Bold",
             fontSize=15, leading=18, textColor=BLUE, spaceAfter=3,
+        ),
+        "ScreenshotTitle": ParagraphStyle(
+            "ScreenshotTitle", parent=base["Normal"], fontName="Helvetica-Bold",
+            fontSize=11.4, leading=14, textColor=ACCENT,
+            alignment=TA_CENTER, spaceBefore=4, spaceAfter=8,
         ),
     }
     return styles
@@ -236,6 +253,10 @@ def draw_cover(canvas, doc) -> None:  # noqa: ANN001
     canvas.drawCentredString(306, 264, STUDENT["department"])
     canvas.drawCentredString(306, 244, STUDENT["school"])
     canvas.drawCentredString(306, 224, STUDENT["address"])
+    canvas.setFillColor(ACCENT)
+    canvas.setFont("Helvetica", 8.6)
+    canvas.drawCentredString(306, 204, f"Repository: {REPOSITORY_URL}")
+    canvas.linkURL(REPOSITORY_URL, (93.6, 196, 518.4, 212), relative=0, thickness=0)
     canvas.restoreState()
 
 
@@ -342,6 +363,20 @@ def output_content(exp: dict, styles: dict[str, ParagraphStyle]) -> list:
     return story
 
 
+def screenshot_flowable(path: Path) -> RLImage:
+    """Scale one screenshot to the manual body frame while preserving aspect ratio."""
+    if not path.exists():
+        raise FileNotFoundError(f"Missing implementation screenshot: {path}")
+    with PILImage.open(path) as image:
+        width, height = image.size
+    frame_width = 424.8
+    frame_height = 555.0
+    scale = min(frame_width / width, frame_height / height)
+    flowable = RLImage(str(path), width=width * scale, height=height * scale)
+    flowable.hAlign = "CENTER"
+    return flowable
+
+
 def appendix_content(ap: dict, styles: dict[str, ParagraphStyle]) -> list:
     title = p(ap["title"], styles["AppendixTitle"])
     title._toc_marker = ap["key"]
@@ -357,6 +392,11 @@ def appendix_content(ap: dict, styles: dict[str, ParagraphStyle]) -> list:
         story.extend(bullet(item, styles["Bullet"]) for item in items)
     story.append(p("Quick Reference", styles["SectionHeading"]))
     story.append(code_table(ap["code"], styles))
+    for index, shot in enumerate(ap.get("screenshots", []), start=1):
+        story.append(PageBreak())
+        story.append(p(f"Figure C.{index} - {shot['title']}", styles["ScreenshotTitle"]))
+        story.append(screenshot_flowable(ROOT / shot["path"]))
+        story.append(p(shot["caption"], styles["Caption"]))
     return story
 
 
@@ -417,6 +457,56 @@ def generate_pdf() -> dict[str, int]:
     return toc_map
 
 
+def build_evidence_pdf() -> None:
+    """Create a screenshots-only companion PDF from the same captured evidence."""
+    SHOWCASE_DIR.mkdir(parents=True, exist_ok=True)
+    doc = SimpleDocTemplate(
+        str(EVIDENCE_PDF_PATH),
+        pagesize=letter,
+        title="TaskFlow Implementation Evidence Screenshots",
+        author=STUDENT["name"],
+        subject=f"{SUBJECT} local-host implementation evidence",
+    )
+    base = getSampleStyleSheet()
+    title_style = ParagraphStyle(
+        "EvidenceTitle", parent=base["Normal"], fontName="Helvetica-Bold",
+        fontSize=20, leading=24, textColor=BLUE, alignment=TA_CENTER,
+        spaceAfter=10,
+    )
+    body_style = ParagraphStyle(
+        "EvidenceBody", parent=base["Normal"], fontName="Helvetica",
+        fontSize=10.5, leading=15, textColor=BODY_GREY,
+        alignment=TA_CENTER, spaceAfter=8,
+    )
+    styles = pdf_styles()
+    story = [
+        Spacer(1, 86),
+        p("TaskFlow Implementation Evidence", title_style),
+        p("Dev Ops and Automation Lab Manual - Screenshot Companion", body_style),
+        Spacer(1, 18),
+        p(f"Submitted by: {STUDENT['name']} (Roll {STUDENT['roll']})", body_style),
+        p(f"Section {STUDENT['section']} | Year {STUDENT['year']}", body_style),
+        p("Local host: 0.0.0.0:8010 | Evidence showcase: 0.0.0.0:8011", body_style),
+        Paragraph(
+            f'<a href="{REPOSITORY_URL}">{escape(REPOSITORY_URL)}</a>',
+            body_style,
+        ),
+        Spacer(1, 16),
+        p(
+            "This direct PDF contains every screenshot embedded in Appendix C of the "
+            "full lab manual. It complements, but does not replace, the template-styled "
+            "capstone manual.",
+            body_style,
+        ),
+    ]
+    for index, shot in enumerate(IMPLEMENTATION_SCREENSHOTS, start=1):
+        story.append(PageBreak())
+        story.append(p(f"Figure C.{index} - {shot['title']}", styles["ScreenshotTitle"]))
+        story.append(screenshot_flowable(ROOT / shot["path"]))
+        story.append(p(shot["caption"], styles["Caption"]))
+    doc.build(story)
+
+
 def write_markdown(toc_map: dict[str, int]) -> None:
     lines = [
         f"# {SUBJECT}",
@@ -427,7 +517,8 @@ def write_markdown(toc_map: dict[str, int]) -> None:
         f"**Section:** {STUDENT['section']} | **Year:** {STUDENT['year']}<br>",
         f"**Subject:** {SUBJECT}<br>",
         f"**Degree:** {STUDENT['degree']} ({STUDENT['program']})<br>",
-        f"**University:** {STUDENT['university']}",
+        f"**University:** {STUDENT['university']}<br>",
+        f"**Repository:** [{REPOSITORY_URL}]({REPOSITORY_URL})",
         "",
         "---",
         "",
@@ -475,7 +566,21 @@ def write_markdown(toc_map: dict[str, int]) -> None:
             lines.append("")
         lines.extend(["### Quick Reference", "", "```text"])
         lines.extend(clean_code(ap["code"]))
-        lines.extend(["```", "", "---", ""])
+        lines.extend(["```", ""])
+        for index, shot in enumerate(ap.get("screenshots", []), start=1):
+            image = f"../implementation-showcase/screenshots/{Path(shot['path']).name}"
+            lines.extend([
+                f"### Figure C.{index} - {shot['title']}",
+                "",
+                f"![{shot['caption']}]({image})",
+                "",
+                f"*{shot['caption']}*",
+                "",
+                "---",
+                "",
+            ])
+        lines.append("---")
+        lines.append("")
     MD_PATH.write_text("\n".join(lines), encoding="utf-8")
 
 
@@ -600,6 +705,7 @@ def docx_cover(doc: Document) -> None:
     doc.add_paragraph(STUDENT["department"], style="CoverBold")
     doc.add_paragraph(STUDENT["school"], style="CoverBold")
     doc.add_paragraph(STUDENT["address"], style="CoverBold")
+    doc.add_paragraph(f"Repository: {REPOSITORY_URL}", style="CoverItalic")
 
 
 def docx_toc(doc: Document, toc_map: dict[str, int]) -> None:
@@ -750,6 +856,14 @@ def docx_appendix(doc: Document, ap: dict) -> None:
         docx_bullets(doc, items)
     doc.add_paragraph("Quick Reference", style="LabHeading")
     docx_code(doc, ap["code"])
+    for index, shot in enumerate(ap.get("screenshots", []), start=1):
+        doc.add_page_break()
+        doc.add_paragraph(f"Figure C.{index} - {shot['title']}", style="LabHeading")
+        picture = doc.add_paragraph()
+        picture.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        picture.add_run().add_picture(str(ROOT / shot["path"]), width=Inches(6.3))
+        caption = doc.add_paragraph(shot["caption"], style="LabAim")
+        caption.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
 
 def build_docx(toc_map: dict[str, int]) -> None:
@@ -786,9 +900,11 @@ def main() -> None:
     toc_map = generate_pdf()
     write_markdown(toc_map)
     build_docx(toc_map)
+    build_evidence_pdf()
     print(f"Generated PDF:  {PDF_PATH.relative_to(ROOT)}")
     print(f"Generated DOCX: {DOCX_PATH.relative_to(ROOT)}")
     print(f"Generated MD:   {MD_PATH.relative_to(ROOT)}")
+    print(f"Generated evidence PDF: {EVIDENCE_PDF_PATH.relative_to(ROOT)}")
     print(f"Resolved {len(toc_map)} table-of-contents page numbers")
 
 

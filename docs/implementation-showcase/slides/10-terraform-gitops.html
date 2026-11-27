@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Terraform and GitOps inventory</title>
+  <link rel="stylesheet" href="../assets/showcase.css">
+</head>
+<body>
+  <section class="slide">
+    <div class="header">
+      <div>
+        <div class="eyebrow">TaskFlow DevOps capstone · Local host evidence</div>
+        <h1>Terraform and GitOps inventory</h1>
+        <p class="subtitle">Parsed HCL resources/modules and Kubernetes overlay manifest counts.</p>
+      </div>
+      <div class="slide-no">Slide 8 / 12</div>
+    </div>
+    <div class="content"><div class="grid2"><div class="card"><div class="meta">AWS + bootstrap state</div><h2>Terraform resources</h2><p>24 managed resources<br><span class="small">aws_ecr_repository.taskflow, aws_ecr_lifecycle_policy.taskflow, aws_db_subnet_group.taskflow, aws_kms_key.rds, aws_security_group.rds, aws_db_instance.taskflow, random_id.backup_suffix, aws_s3_bucket.backups, aws_s3_bucket_versioning.backups, aws_s3_bucket_server_side_encryption_configuration.backups, aws_s3_bucket_public_access_block.backups, aws_s3_bucket_lifecycle_configuration.backups</span></p></div><div class="card"><div class="meta">VPC / EKS</div><h2>Terraform modules</h2><p>vpc, eks</p></div><div class="card"><div class="meta">Environment overlay</div><h2>GitOps dev</h2><p>9 manifests<br><span class="small">configmap.yaml, hpa-patch.yaml, ingress.yaml, kustomization.yaml, namespace.yaml</span></p></div><div class="card"><div class="meta">Environment overlay</div><h2>GitOps prod</h2><p>12 manifests<br><span class="small">configmap.yaml, external-secret.yaml, hpa-patch.yaml, ingress.yaml, kustomization.yaml</span></p></div><div class="card"><div class="meta">Environment overlay</div><h2>GitOps staging</h2><p>12 manifests<br><span class="small">configmap.yaml, external-secret.yaml, hpa-patch.yaml, ingress.yaml, kustomization.yaml</span></p></div></div></div>
+    <div class="footer">
+      <span>Branch arena/17ac59ad-dev-ops-cap-stone · Commit cc4509e</span>
+      <span>https://github.com/ArghyadiptaGoswami4259/DEV-OPS-Cap-Stone · Generated 2026-11-27 00:05 UTC</span>
+    </div>
+  </section>
+</body>
+</html>
