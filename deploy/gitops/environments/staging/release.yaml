@@ -7,11 +7,11 @@ metadata:
 spec:
   image:
     repository: ghcr.io/arghyadiptagoswami4259/dev-ops-cap-stone/taskflow
-    digest: sha256:e96088390e2a1bdc7469024abe0346a85d14c753b16f7969525a9e706f5cb3f9
+    digest: sha256:808c08fbcd0ed4cc0d40f926936d8b96d1b533cbd8a0a65e47498323ad6df9a6
     signed: true
     verifiedBy: cosign-keyless
   source:
-    commit: 5868ed62d793cd778fa7ee1bc860ed655f3a7042
+    commit: f96c9fa0d22ecac81b4834356bf6e1ca54ed58ec
     workflow: ci
   approval:
     required: true
@@ -26,5 +26,5 @@ spec:
     rpoMinutes: 60
     rtoMinutes: 30
   promotion:
-    timestamp: '2026-11-27T00:29:52.862738+00:00'
+    timestamp: '2026-11-27T00:39:36.774527+00:00'
     immutable: true

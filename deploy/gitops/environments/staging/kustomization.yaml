@@ -22,4 +22,4 @@ patches:
 images:
 - name: ghcr.io/arghyadiptagoswami4259/dev-ops-cap-stone/taskflow
   newName: ghcr.io/arghyadiptagoswami4259/dev-ops-cap-stone/taskflow
-  digest: sha256:e96088390e2a1bdc7469024abe0346a85d14c753b16f7969525a9e706f5cb3f9
+  digest: sha256:808c08fbcd0ed4cc0d40f926936d8b96d1b533cbd8a0a65e47498323ad6df9a6
