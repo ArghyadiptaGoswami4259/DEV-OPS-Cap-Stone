@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Security and supply-chain controls</title>
+  <link rel="stylesheet" href="../assets/showcase.css">
+</head>
+<body>
+  <section class="slide">
+    <div class="header">
+      <div>
+        <div class="eyebrow">TaskFlow DevOps capstone · Local host evidence</div>
+        <h1>Security and supply-chain controls</h1>
+        <p class="subtitle">Repository-managed controls keep the CI gate strict and the release identity verifiable.</p>
+      </div>
+      <div class="slide-no">Slide 9 / 12</div>
+    </div>
+    <div class="content"><div class="grid2"><div class="card"><h2>Controls</h2><p><span class="badge ok">Gitleaks</span><span class="badge ok">CodeQL</span><span class="badge ok">Bandit</span><span class="badge ok">pip-audit</span><span class="badge ok">Trivy fs</span><span class="badge ok">Trivy image</span><span class="badge ok">SBOM</span><span class="badge ok">Cosign keyless</span><span class="badge ok">Rekor</span><span class="badge ok">Kyverno</span><span class="badge ok">KMS</span><span class="badge ok">TLS-only buckets</span><span class="badge ok">readOnlyRootFilesystem</span><span class="badge ok">restricted egress</span></p><p class="small">The only Trivy exception is a dated, path-scoped upstream EKS module rule; repository-managed egress remains restricted.</p></div><div class="card"><h2>Policy manifests</h2><ul class="list"><li>cert-manager-issuers.yaml:selfsigned</li><li>cert-manager-issuers.yaml:letsencrypt-staging</li><li>cert-manager-issuers.yaml:letsencrypt-prod</li><li>kyverno-policies.yaml:taskflow-restricted-workloads</li><li>kyverno-policies.yaml:taskflow-verify-signed-images</li><li>rbac.yaml:taskflow-backup-reader</li><li>rbac.yaml:taskflow-backup-reader</li></ul></div></div></div>
+    <div class="footer">
+      <span>Branch arena/17ac59ad-dev-ops-cap-stone · Commit cc4509e</span>
+      <span>https://github.com/ArghyadiptaGoswami4259/DEV-OPS-Cap-Stone · Generated 2026-11-27 00:05 UTC</span>
+    </div>
+  </section>
+</body>
+</html>

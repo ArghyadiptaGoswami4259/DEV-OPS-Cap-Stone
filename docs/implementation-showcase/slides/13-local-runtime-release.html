@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Local runtime and release gates</title>
+  <link rel="stylesheet" href="../assets/showcase.css">
+</head>
+<body>
+  <section class="slide">
+    <div class="header">
+      <div>
+        <div class="eyebrow">TaskFlow DevOps capstone · Local host evidence</div>
+        <h1>Local runtime and release gates</h1>
+        <p class="subtitle">Documented Docker-independent runtime evidence plus live release-gate behavior.</p>
+      </div>
+      <div class="slide-no">Slide 11 / 12</div>
+    </div>
+    <div class="content"><div class="grid2"><div class="card"><div class="meta">Documented in docs/validation-evidence.md</div><h2>Docker-independent runtime</h2><p>Podman 5.2.5 · conmon 2.1.12 · runc/libseccomp · CNI 1.5.1 · containerd 1.7.20 · Kubernetes 1.31.0 · etcd 3.5.16. The reproducible local control plane reached /readyz ok with 1/1 Ready node, 3/3 healthy components and a succeeded runtime probe.</p></div><div class="card"><h3>Bootstrap release scaffold</h3><span class="badge ok">PASS</span><pre class="terminal">.venv/bin/python tools/verify_release.py --environment prod --allow-bootstrap
+
+Bootstrap scaffold validated for prod; it is not deployable.</pre></div><div class="card"><h3>Strict production gate (expected rejection)</h3><span class="badge warn">EXIT 1</span><pre class="terminal">.venv/bin/python tools/verify_release.py --environment prod
+
+Release gate FAILED for prod:
+  - release state annotation must be promoted
+  - bootstrap digest cannot be promoted
+  - image must be signed with cosign
+  - signature verification evidence is missing
+  - source commit is missing
+  - production approval is missing
+  - promotion timestamp is missing
+  - promoted release must be immutable</pre></div><div class="card"><div class="meta">Live at capture time</div><h2>Current local host</h2><p>TaskFlow is running on <code>http://127.0.0.1:8010</code> with a disposable SQLite database. The showcase is served separately on port 8011.</p></div></div></div>
+    <div class="footer">
+      <span>Branch arena/17ac59ad-dev-ops-cap-stone · Commit cc4509e</span>
+      <span>https://github.com/ArghyadiptaGoswami4259/DEV-OPS-Cap-Stone · Generated 2026-11-27 00:05 UTC</span>
+    </div>
+  </section>
+</body>
+</html>

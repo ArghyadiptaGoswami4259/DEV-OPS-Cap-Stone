@@ -1,0 +1,660 @@
+{
+  "generated_at": "2026-11-27 00:05 UTC",
+  "repository": "https://github.com/ArghyadiptaGoswami4259/DEV-OPS-Cap-Stone",
+  "branch": "arena/17ac59ad-dev-ops-cap-stone",
+  "commit": "cc4509e",
+  "app": {
+    "base_url": "http://127.0.0.1:8010",
+    "health": {
+      "status": 200,
+      "headers": {
+        "content-length": "95",
+        "content-type": "application/json",
+        "x-request-id": "850acd84a2e29d18",
+        "x-trace-id": "64d72286d51aeee71be42d7cb37b2df8",
+        "traceparent": "00-64d72286d51aeee71be42d7cb37b2df8-850acd84a2e29d18-01",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "no-referrer",
+        "permissions-policy": "camera=(), microphone=(), geolocation=()",
+        "cache-control": "no-store",
+        "content-security-policy": "default-src 'self'; base-uri 'self'; form-action 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; object-src 'none'",
+        "connection": "close"
+      },
+      "body": {
+        "status": "ok",
+        "service": "TaskFlow",
+        "version": "1.0.0",
+        "commit": "cc4509e",
+        "environment": "local"
+      }
+    },
+    "ready": {
+      "status": 200,
+      "headers": {
+        "content-length": "34",
+        "content-type": "application/json",
+        "x-request-id": "223572a58b0796a5",
+        "x-trace-id": "f83bedf994112c6ed3451e13d4d629c5",
+        "traceparent": "00-f83bedf994112c6ed3451e13d4d629c5-223572a58b0796a5-01",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "no-referrer",
+        "permissions-policy": "camera=(), microphone=(), geolocation=()",
+        "cache-control": "no-store",
+        "content-security-policy": "default-src 'self'; base-uri 'self'; form-action 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; object-src 'none'",
+        "connection": "close"
+      },
+      "body": {
+        "status": "ready",
+        "database": "ok"
+      }
+    },
+    "info": {
+      "status": 200,
+      "headers": {
+        "content-length": "112",
+        "content-type": "application/json",
+        "x-request-id": "d3c0cbc80635add5",
+        "x-trace-id": "7da4e839e594a1839d7b784961b98126",
+        "traceparent": "00-7da4e839e594a1839d7b784961b98126-d3c0cbc80635add5-01",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "no-referrer",
+        "permissions-policy": "camera=(), microphone=(), geolocation=()",
+        "cache-control": "no-store",
+        "content-security-policy": "default-src 'self'; base-uri 'self'; form-action 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; object-src 'none'",
+        "connection": "close"
+      },
+      "body": {
+        "service": "TaskFlow",
+        "version": "1.0.0",
+        "commit": "cc4509e",
+        "environment": "local",
+        "otel_service_name": "taskflow"
+      }
+    },
+    "headers": {
+      "x-request-id": "850acd84a2e29d18",
+      "x-trace-id": "64d72286d51aeee71be42d7cb37b2df8",
+      "traceparent": "00-64d72286d51aeee71be42d7cb37b2df8-850acd84a2e29d18-01",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "not present",
+      "referrer-policy": "no-referrer",
+      "content-security-policy": "default-src 'self'; base-uri 'self'; form-action 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; object-src 'none'",
+      "strict-transport-security": "not present"
+    },
+    "tasks": {
+      "status": 200,
+      "headers": {
+        "content-length": "1008",
+        "content-type": "application/json",
+        "x-request-id": "02abdbd1811068e1",
+        "x-trace-id": "b2ada1f14bac203b66d149831c2cde39",
+        "traceparent": "00-b2ada1f14bac203b66d149831c2cde39-02abdbd1811068e1-01",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "no-referrer",
+        "permissions-policy": "camera=(), microphone=(), geolocation=()",
+        "cache-control": "no-store",
+        "content-security-policy": "default-src 'self'; base-uri 'self'; form-action 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; object-src 'none'",
+        "connection": "close"
+      },
+      "body": {
+        "items": [
+          {
+            "id": "060124ad-75da-49ab-8e06-7737ffa34b53",
+            "title": "Exercise rollback runbook",
+            "description": "Abort a failed rollout and restore the stable ReplicaSet.",
+            "status": "in_progress",
+            "created_at": "2026-11-27T00:06:08",
+            "updated_at": "2026-11-27T00:06:08"
+          },
+          {
+            "id": "1bcc1272-23bf-46fe-9ada-f8a6cade72c6",
+            "title": "Verify canary analysis",
+            "description": "Confirm Prometheus gates before production promotion.",
+            "status": "in_progress",
+            "created_at": "2026-11-27T00:06:08",
+            "updated_at": "2026-11-27T00:06:08"
+          },
+          {
+            "id": "6e61c732-1f4a-441c-9408-d2eeb904fb3c",
+            "title": "Review signed image digest",
+            "description": "Check Cosign keyless signature and Rekor evidence.",
+            "status": "done",
+            "created_at": "2026-11-27T00:06:08",
+            "updated_at": "2026-11-27T00:06:08"
+          },
+          {
+            "id": "d8d15ede-5f0c-4bd8-89a5-acab9acb95ca",
+            "title": "Capture implementation screenshots",
+            "description": "Add local-host evidence to the capstone PDF.",
+            "status": "done",
+            "created_at": "2026-11-27T00:06:08",
+            "updated_at": "2026-11-27T00:06:08"
+          }
+        ],
+        "total": 4,
+        "limit": 50,
+        "offset": 0
+      }
+    },
+    "created": [
+      201,
+      201,
+      201,
+      201
+    ],
+    "patched": {
+      "status": 200,
+      "headers": {
+        "content-length": "248",
+        "content-type": "application/json",
+        "x-request-id": "0bb904d18e3d9ccf",
+        "x-trace-id": "ddad8bb0d1e2a87b71a7ed139ed01ed7",
+        "traceparent": "00-ddad8bb0d1e2a87b71a7ed139ed01ed7-0bb904d18e3d9ccf-01",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "no-referrer",
+        "permissions-policy": "camera=(), microphone=(), geolocation=()",
+        "cache-control": "no-store",
+        "content-security-policy": "default-src 'self'; base-uri 'self'; form-action 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; object-src 'none'",
+        "connection": "close"
+      },
+      "body": {
+        "id": "060124ad-75da-49ab-8e06-7737ffa34b53",
+        "title": "Exercise rollback runbook",
+        "description": "Abort a failed rollout and restore the stable ReplicaSet.",
+        "status": "in_progress",
+        "created_at": "2026-11-27T00:06:08",
+        "updated_at": "2026-11-27T00:06:08"
+      }
+    },
+    "deleted": {
+      "status": 204,
+      "headers": {
+        "x-request-id": "0814ac4a004ca277",
+        "x-trace-id": "23a5827e7ef597964a93e39a7b65d923",
+        "traceparent": "00-23a5827e7ef597964a93e39a7b65d923-0814ac4a004ca277-01",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "no-referrer",
+        "permissions-policy": "camera=(), microphone=(), geolocation=()",
+        "cache-control": "no-store",
+        "content-security-policy": "default-src 'self'; base-uri 'self'; form-action 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; object-src 'none'",
+        "connection": "close"
+      },
+      "body": null
+    },
+    "openapi": {
+      "openapi": "3.1.0",
+      "title": "TaskFlow API",
+      "version": "1.0.0",
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/healthz",
+          "tags": "health",
+          "summary": "Healthz"
+        },
+        {
+          "method": "GET",
+          "path": "/readyz",
+          "tags": "health",
+          "summary": "Readyz"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/info",
+          "tags": "metadata",
+          "summary": "Info"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/tasks",
+          "tags": "tasks",
+          "summary": "List Tasks"
+        },
+        {
+          "method": "POST",
+          "path": "/api/v1/tasks",
+          "tags": "tasks",
+          "summary": "Create Task"
+        },
+        {
+          "method": "GET",
+          "path": "/api/v1/tasks/{task_id}",
+          "tags": "tasks",
+          "summary": "Get Task"
+        },
+        {
+          "method": "PATCH",
+          "path": "/api/v1/tasks/{task_id}",
+          "tags": "tasks",
+          "summary": "Update Task"
+        },
+        {
+          "method": "DELETE",
+          "path": "/api/v1/tasks/{task_id}",
+          "tags": "tasks",
+          "summary": "Delete Task"
+        }
+      ]
+    },
+    "metric_lines": [
+      "taskflow_http_requests_total{method=\"GET\",route=\"/\",status=\"200\"} 1.0",
+      "taskflow_http_requests_total{method=\"GET\",route=\"/api/v1/tasks\",status=\"200\"} 3.0",
+      "taskflow_http_requests_total{method=\"POST\",route=\"/api/v1/tasks\",status=\"201\"} 5.0",
+      "taskflow_http_requests_total{method=\"PATCH\",route=\"/api/v1/tasks/{task_id}\",status=\"200\"} 1.0",
+      "taskflow_http_requests_total{method=\"DELETE\",route=\"/api/v1/tasks/{task_id}\",status=\"204\"} 1.0",
+      "taskflow_http_requests_total{method=\"GET\",route=\"/api/v1/info\",status=\"200\"} 1.0",
+      "taskflow_http_requests_total{method=\"GET\",route=\"unmatched\",status=\"200\"} 1.0",
+      "taskflow_http_requests_created{method=\"GET\",route=\"/\",status=\"200\"} 1.7957379455076938e+09",
+      "taskflow_http_requests_created{method=\"GET\",route=\"/api/v1/tasks\",status=\"200\"} 1.7957379681000054e+09",
+      "taskflow_http_requests_created{method=\"POST\",route=\"/api/v1/tasks\",status=\"201\"} 1.7957379681081572e+09"
+    ],
+    "crud": {
+      "post": 201,
+      "patch": 200,
+      "delete": 204,
+      "get": 200
+    }
+  },
+  "commands": {
+    "configure": {
+      "command": "make configure-check",
+      "returncode": 0,
+      "output": "make[1]: Entering directory '/home/user/DEV-OPS-Cap-Stone'\nPlatform configuration is synchronized.\nmake[1]: Leaving directory '/home/user/DEV-OPS-Cap-Stone'"
+    },
+    "validate": {
+      "command": "make validate",
+      "returncode": 0,
+      "output": "make[1]: Entering directory '/home/user/DEV-OPS-Cap-Stone'\nPlatform configuration is synchronized.\nRepository validation passed: required files, Python/shell, YAML/JSON/HCL, Kustomize references, action pins, secrets, platform configuration and lab-manual content.\nmake[1]: Leaving directory '/home/user/DEV-OPS-Cap-Stone'"
+    },
+    "lint": {
+      "command": "make lint",
+      "returncode": 0,
+      "output": "\t\tUndefined: 0\n\t\tLow: 1\n\t\tMedium: 0\n\t\tHigh: 0\n\tTotal issues (by confidence):\n\t\tUndefined: 0\n\t\tLow: 0\n\t\tMedium: 0\n\t\tHigh: 1\nFiles skipped (0):\nRepository validation passed: required files, Python/shell, YAML/JSON/HCL, Kustomize references, action pins, secrets, platform configuration and lab-manual content.\nmake[1]: Leaving directory '/home/user/DEV-OPS-Cap-Stone'\n[main]\tINFO\tprofile include tests: None\n[main]\tINFO\tprofile exclude tests: None\n[main]\tINFO\tcli include tests: None\n[main]\tINFO\tcli exclude tests: None\n[main]\tINFO\trunning on Python 3.11.2\nNo known vulnerabilities found"
+    },
+    "test": {
+      "command": "make test",
+      "returncode": 0,
+      "output": "make[1]: Entering directory '/home/user/DEV-OPS-Cap-Stone'\n...........                                                              [100%]\n11 passed in 0.31s\nmake[1]: Leaving directory '/home/user/DEV-OPS-Cap-Stone'"
+    },
+    "release_bootstrap": {
+      "command": ".venv/bin/python tools/verify_release.py --environment prod --allow-bootstrap",
+      "returncode": 0,
+      "output": "Bootstrap scaffold validated for prod; it is not deployable."
+    },
+    "release_strict": {
+      "command": ".venv/bin/python tools/verify_release.py --environment prod",
+      "returncode": 1,
+      "output": "Release gate FAILED for prod:\n  - release state annotation must be promoted\n  - bootstrap digest cannot be promoted\n  - image must be signed with cosign\n  - signature verification evidence is missing\n  - source commit is missing\n  - production approval is missing\n  - promotion timestamp is missing\n  - promoted release must be immutable"
+    }
+  },
+  "github": {
+    "branch": "arena/17ac59ad-dev-ops-cap-stone",
+    "owner_repo": "ArghyadiptaGoswami4259/DEV-OPS-Cap-Stone",
+    "successful_run": {
+      "conclusion": "success",
+      "databaseId": 45912180142,
+      "displayTitle": "docs: add GitHub repository link to capstone manual",
+      "event": "push",
+      "headSha": "cc4509edefbc5fcfe02b8808118f81a750f311eb",
+      "status": "completed",
+      "url": "https://github.com/ArghyadiptaGoswami4259/DEV-OPS-Cap-Stone/actions/runs/45912180142"
+    },
+    "checks": [
+      {
+        "conclusion": "success",
+        "html_url": "https://github.com/ArghyadiptaGoswami4259/DEV-OPS-Cap-Stone/actions/runs/45912180142/job/140223400963",
+        "name": "Build, scan, sign and publish immutable image",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "html_url": "https://github.com/ArghyadiptaGoswami4259/DEV-OPS-Cap-Stone/actions/runs/45912180142/job/140222910005",
+        "name": "CodeQL, secrets and filesystem scan",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "html_url": "https://github.com/ArghyadiptaGoswami4259/DEV-OPS-Cap-Stone/actions/runs/45912180142/job/140222909630",
+        "name": "Test and quality gates",
+        "status": "completed"
+      }
+    ],
+    "fallback": false
+  },
+  "inventory": {
+    "categories": [
+      {
+        "category": "Application and API",
+        "files": 33,
+        "examples": [
+          "app/__init__.py",
+          "app/__main__.py",
+          "app/__pycache__/__init__.cpython-311.pyc",
+          "tests/__pycache__/conftest.cpython-311-pytest-8.3.4.pyc"
+        ]
+      },
+      {
+        "category": "Local runtime and containers",
+        "files": 5,
+        "examples": [
+          "Dockerfile",
+          "docker-compose.yml",
+          "tools/build_local_runtime.py",
+          "tools/local-cluster.sh"
+        ]
+      },
+      {
+        "category": "CI/CD and release gates",
+        "files": 5,
+        "examples": [
+          ".github/workflows/cd.yml",
+          ".github/workflows/ci.yml",
+          ".github/workflows/promote.yml",
+          "tools/verify_release.py"
+        ]
+      },
+      {
+        "category": "Terraform infrastructure",
+        "files": 11,
+        "examples": [
+          "infra/terraform/backend.hcl.example",
+          "infra/terraform/bootstrap/main.tf",
+          "infra/terraform/environments/dev.backend.hcl"
+        ]
+      },
+      {
+        "category": "Kubernetes and GitOps",
+        "files": 49,
+        "examples": [
+          "deploy/gitops/apps/taskflow/base/analysis-template.yaml",
+          "deploy/gitops/apps/taskflow/base/configmap.yaml",
+          "deploy/gitops/apps/taskflow/base/hpa.yaml"
+        ]
+      },
+      {
+        "category": "Platform controls",
+        "files": 35,
+        "examples": [
+          "platform/argo-rollouts-values.yaml",
+          "platform/argocd/applicationset.yaml",
+          "platform/argocd/argocd-values.yaml"
+        ]
+      },
+      {
+        "category": "Runbooks and recovery",
+        "files": 9,
+        "examples": [
+          "runbooks/dr-restore.md",
+          "runbooks/incident-response.md",
+          "runbooks/pipeline-failure.md",
+          "platform/backup/README.md"
+        ]
+      },
+      {
+        "category": "Documentation and manual",
+        "files": 73,
+        "examples": [
+          "docs/architecture.md",
+          "docs/architecture.mmd",
+          "docs/branching.md",
+          "README.md"
+        ]
+      }
+    ],
+    "workflows": [
+      {
+        "file": "cd.yml",
+        "jobs": [
+          {
+            "name": "stage",
+            "steps": 11,
+            "sample": [
+              "Checkout delivery branch",
+              "Download CI digest",
+              "Resolve and validate digest",
+              "Set up Python"
+            ]
+          }
+        ]
+      },
+      {
+        "file": "ci.yml",
+        "jobs": [
+          {
+            "name": "quality",
+            "steps": 9,
+            "sample": [
+              "Checkout",
+              "Set up Python",
+              "Install dependencies",
+              "Lint and type-check"
+            ]
+          },
+          {
+            "name": "security",
+            "steps": 7,
+            "sample": [
+              "Checkout",
+              "Initialize CodeQL",
+              "Gitleaks secret scan",
+              "Install pinned Trivy binary"
+            ]
+          },
+          {
+            "name": "container",
+            "steps": 15,
+            "sample": [
+              "Checkout",
+              "Resolve lowercase image name",
+              "Set up Docker Buildx",
+              "Log in to GHCR"
+            ]
+          }
+        ]
+      },
+      {
+        "file": "promote.yml",
+        "jobs": [
+          {
+            "name": "production",
+            "steps": 11,
+            "sample": [
+              "Checkout delivery branch",
+              "Validate digest",
+              "Set up Python",
+              "Install manifest tooling"
+            ]
+          }
+        ]
+      }
+    ],
+    "terraform": {
+      "resources": [
+        "aws_ecr_repository.taskflow",
+        "aws_ecr_lifecycle_policy.taskflow",
+        "aws_db_subnet_group.taskflow",
+        "aws_kms_key.rds",
+        "aws_security_group.rds",
+        "aws_db_instance.taskflow",
+        "random_id.backup_suffix",
+        "aws_s3_bucket.backups",
+        "aws_s3_bucket_versioning.backups",
+        "aws_s3_bucket_server_side_encryption_configuration.backups",
+        "aws_s3_bucket_public_access_block.backups",
+        "aws_s3_bucket_lifecycle_configuration.backups",
+        "aws_s3_bucket_policy.tls_only",
+        "aws_iam_role.external_secrets",
+        "aws_iam_role_policy.external_secrets",
+        "aws_iam_role.backup",
+        "aws_iam_role_policy.backup",
+        "random_id.suffix",
+        "aws_kms_key.state",
+        "aws_s3_bucket.state",
+        "aws_s3_bucket_versioning.state",
+        "aws_s3_bucket_server_side_encryption_configuration.state",
+        "aws_s3_bucket_public_access_block.state",
+        "aws_dynamodb_table.locks"
+      ],
+      "modules": [
+        "vpc",
+        "eks"
+      ]
+    },
+    "gitops": [
+      {
+        "environment": "dev",
+        "files": 9,
+        "examples": [
+          "configmap.yaml",
+          "hpa-patch.yaml",
+          "ingress.yaml",
+          "kustomization.yaml",
+          "namespace.yaml"
+        ]
+      },
+      {
+        "environment": "prod",
+        "files": 12,
+        "examples": [
+          "configmap.yaml",
+          "external-secret.yaml",
+          "hpa-patch.yaml",
+          "ingress.yaml",
+          "kustomization.yaml"
+        ]
+      },
+      {
+        "environment": "staging",
+        "files": 12,
+        "examples": [
+          "configmap.yaml",
+          "external-secret.yaml",
+          "hpa-patch.yaml",
+          "ingress.yaml",
+          "kustomization.yaml"
+        ]
+      }
+    ],
+    "policy_names": [
+      "cert-manager-issuers.yaml:selfsigned",
+      "cert-manager-issuers.yaml:letsencrypt-staging",
+      "cert-manager-issuers.yaml:letsencrypt-prod",
+      "kyverno-policies.yaml:taskflow-restricted-workloads",
+      "kyverno-policies.yaml:taskflow-verify-signed-images",
+      "rbac.yaml:taskflow-backup-reader",
+      "rbac.yaml:taskflow-backup-reader"
+    ],
+    "observability": [
+      "platform/observability/alertmanager.yaml",
+      "platform/observability/dashboard-configmap.yaml",
+      "platform/observability/grafana-dashboard-taskflow.json",
+      "platform/observability/grafana-dashboards.yml",
+      "platform/observability/grafana-datasources.yml",
+      "platform/observability/kube-prometheus-values.yaml",
+      "platform/observability/log-queries.md",
+      "platform/observability/loki-local-config.yml",
+      "platform/observability/loki-rules.yaml",
+      "platform/observability/loki-values.yaml",
+      "platform/observability/prometheus-local.yml",
+      "platform/observability/promtail-local-config.yml",
+      "platform/observability/promtail-values.yaml"
+    ],
+    "backup": [
+      "platform/backup/README.md",
+      "platform/backup/backup-iam-policy.json",
+      "platform/backup/rds-snapshot-cronjob.yaml",
+      "platform/backup/velero-schedule.yaml",
+      "platform/backup/velero-values.yaml"
+    ],
+    "runbooks": [
+      "runbooks/dr-restore.md",
+      "runbooks/incident-response.md",
+      "runbooks/pipeline-failure.md",
+      "runbooks/rollback.md"
+    ],
+    "diagrams": [
+      "docs/diagrams/01-architecture.png",
+      "docs/diagrams/02-version-control.png",
+      "docs/diagrams/03-container.png",
+      "docs/diagrams/04-ci-gates.png",
+      "docs/diagrams/05-terraform.png",
+      "docs/diagrams/06-kubernetes.png",
+      "docs/diagrams/07-gitops.png",
+      "docs/diagrams/08-observability.png",
+      "docs/diagrams/09-security.png",
+      "docs/diagrams/10-canary.png"
+    ]
+  },
+  "screenshots": [
+    {
+      "path": "docs/implementation-showcase/screenshots/01-template-cover.png",
+      "title": "Template-styled capstone cover",
+      "caption": "The requested cover design, student metadata and clickable repository link."
+    },
+    {
+      "path": "docs/implementation-showcase/screenshots/02-live-application.png",
+      "title": "TaskFlow on the local host",
+      "caption": "Live browser UI on 0.0.0.0:8010 with health, release identity and task CRUD."
+    },
+    {
+      "path": "docs/implementation-showcase/screenshots/03-live-api-evidence.png",
+      "title": "Live API and response headers",
+      "caption": "Actual local-host responses for health, readiness, metadata, tasks and metrics."
+    },
+    {
+      "path": "docs/implementation-showcase/screenshots/04-api-contract.png",
+      "title": "OpenAPI contract and routes",
+      "caption": "Generated OpenAPI 3.1 contract showing the implemented TaskFlow operations."
+    },
+    {
+      "path": "docs/implementation-showcase/screenshots/05-quality-gates.png",
+      "title": "Local quality and validation gates",
+      "caption": "Configuration sync, repository validation, lint, typing, SAST, audit and tests."
+    },
+    {
+      "path": "docs/implementation-showcase/screenshots/06-github-actions.png",
+      "title": "GitHub Actions delivery run",
+      "caption": "Successful push-triggered CI run with quality, security and signed-image jobs."
+    },
+    {
+      "path": "docs/implementation-showcase/screenshots/07-implementation-inventory.png",
+      "title": "Implemented component inventory",
+      "caption": "Repository-wide inventory of application, runtime, CI/CD, infrastructure and controls."
+    },
+    {
+      "path": "docs/implementation-showcase/screenshots/08-architecture-diagrams.png",
+      "title": "Architecture and evidence diagrams",
+      "caption": "All ten generated diagrams covering architecture, delivery, security and canary flow."
+    },
+    {
+      "path": "docs/implementation-showcase/screenshots/09-ci-cd-workflows.png",
+      "title": "CI/CD and promotion workflows",
+      "caption": "Pinned GitHub Actions jobs for CI, staging CD and production promotion."
+    },
+    {
+      "path": "docs/implementation-showcase/screenshots/10-terraform-gitops.png",
+      "title": "Terraform and GitOps inventory",
+      "caption": "AWS resources, environment overlays, bootstrap state and hardened delivery manifests."
+    },
+    {
+      "path": "docs/implementation-showcase/screenshots/11-security-supply-chain.png",
+      "title": "Security and supply-chain controls",
+      "caption": "Secret scanning, SAST, IaC/image scans, policy, SBOM and keyless image signing."
+    },
+    {
+      "path": "docs/implementation-showcase/screenshots/12-observability-backup.png",
+      "title": "Observability, SLO and recovery",
+      "caption": "Prometheus, Grafana, Loki, Alertmanager, SLO, backup, restore and runbooks."
+    },
+    {
+      "path": "docs/implementation-showcase/screenshots/13-local-runtime-release.png",
+      "title": "Local runtime and release gates",
+      "caption": "Documented Docker-independent runtime evidence plus bootstrap and strict release gates."
+    },
+    {
+      "path": "docs/implementation-showcase/screenshots/14-implementation-gallery.png",
+      "title": "Complete implementation evidence gallery",
+      "caption": "Single-page index of every screenshot embedded in Appendix C of the PDF."
+    }
+  ]
+}

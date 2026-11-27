@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>CI/CD and promotion workflows</title>
+  <link rel="stylesheet" href="../assets/showcase.css">
+</head>
+<body>
+  <section class="slide">
+    <div class="header">
+      <div>
+        <div class="eyebrow">TaskFlow DevOps capstone · Local host evidence</div>
+        <h1>CI/CD and promotion workflows</h1>
+        <p class="subtitle">Pinned GitHub Actions workflows parsed from .github/workflows.</p>
+      </div>
+      <div class="slide-no">Slide 7 / 12</div>
+    </div>
+    <div class="content"><div class="grid3"><div class="card"><div class="meta">Pinned Actions</div><h2>cd.yml</h2><p><strong>stage</strong>: 11 steps (Checkout delivery branch, Download CI digest, Resolve and validate digest, Set up Python)</p></div><div class="card"><div class="meta">Pinned Actions</div><h2>ci.yml</h2><p><strong>quality</strong>: 9 steps (Checkout, Set up Python, Install dependencies, Lint and type-check)<br><strong>security</strong>: 7 steps (Checkout, Initialize CodeQL, Gitleaks secret scan, Install pinned Trivy binary)<br><strong>container</strong>: 15 steps (Checkout, Resolve lowercase image name, Set up Docker Buildx, Log in to GHCR)</p></div><div class="card"><div class="meta">Pinned Actions</div><h2>promote.yml</h2><p><strong>production</strong>: 11 steps (Checkout delivery branch, Validate digest, Set up Python, Install manifest tooling)</p></div></div></div>
+    <div class="footer">
+      <span>Branch arena/17ac59ad-dev-ops-cap-stone · Commit cc4509e</span>
+      <span>https://github.com/ArghyadiptaGoswami4259/DEV-OPS-Cap-Stone · Generated 2026-11-27 00:05 UTC</span>
+    </div>
+  </section>
+</body>
+</html>

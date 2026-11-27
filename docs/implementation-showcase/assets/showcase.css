@@ -1,0 +1,86 @@
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0; width: 1440px; height: 1000px; background: #edf4fb;
+  color: #10243e; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.slide {
+  width: 1440px; height: 1000px; padding: 38px 56px 24px; display: flex; flex-direction: column;
+  background: radial-gradient(circle at 10% 4%, #cbe3fa 0, transparent 30%),
+              radial-gradient(circle at 92% 6%, #e5d9ff 0, transparent 27%), #f6faff;
+}
+.header {
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+  border-bottom: 2px solid #2e75b6; padding-bottom: 14px; min-height: 88px;
+}
+.eyebrow {
+  color: #2e75b6; font-size: 12px; font-weight: 800; letter-spacing: .16em;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+h1 { margin: 0; color: #1b4f72; font-size: 34px; line-height: 1.05; letter-spacing: -.025em; }
+.subtitle { margin: 7px 0 0; color: #607287; font-size: 15px; max-width: 900px; }
+.slide-no {
+  color: #2e75b6; font-weight: 800; font-size: 13px; white-space: nowrap;
+  border: 1px solid #b8c7d9; border-radius: 999px; padding: 8px 14px; background: #ffffff;
+}
+.content { flex: 1; overflow: hidden; padding-top: 22px; }
+.footer {
+  border-top: 1px solid #dce7f3; color: #607287; font-size: 11px; padding-top: 10px;
+  display: flex; justify-content: space-between; gap: 20px;
+}
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.card {
+  background: rgba(255,255,255,.95); border: 1px solid #dce7f3; border-radius: 16px;
+  box-shadow: 0 12px 34px rgba(27,79,114,.09); padding: 16px 18px; min-height: 96px;
+}
+.card h2 { margin: 0 0 8px; color: #1b4f72; font-size: 17px; }
+.card h3 { margin: 0 0 7px; color: #2e75b6; font-size: 14px; }
+.card p { margin: 0; color: #43566c; font-size: 13px; line-height: 1.45; }
+.meta { color: #607287; font-size: 11px; text-transform: uppercase; letter-spacing: .07em; }
+.badge {
+  display: inline-block; border-radius: 999px; padding: 3px 9px; font-size: 11px;
+  font-weight: 800; background: #eaf2fb; color: #1b4f72; margin: 0 5px 5px 0;
+}
+.ok { background: #e9f8f1; color: #16845b; }
+.warn { background: #fff5e6; color: #9b6512; }
+pre {
+  margin: 0; padding: 14px 16px; border-radius: 12px; background: #10243e; color: #eaf2fb;
+  font: 12px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  white-space: pre-wrap; word-break: break-word; max-height: 510px; overflow: hidden;
+}
+pre.terminal {
+  background: #0d1b2a; color: #d8e8f8; border-left: 4px solid #2e75b6;
+}
+pre.json { font-size: 11px; line-height: 1.35; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { border-bottom: 1px solid #dce7f3; padding: 9px 8px; text-align: left; vertical-align: top; }
+th { color: #1b4f72; font-size: 11px; letter-spacing: .07em; text-transform: uppercase; }
+td code { color: #2e75b6; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.screenshot {
+  display: block; margin: 0 auto; max-width: 100%; max-height: 620px;
+  border: 1px solid #b8c7d9; border-radius: 12px; box-shadow: 0 14px 36px rgba(27,79,114,.14);
+}
+.diagram {
+  width: 100%; height: 150px; object-fit: contain; background: #ffffff;
+  border: 1px solid #dce7f3; border-radius: 10px; padding: 8px;
+}
+.diagram-card { padding: 10px; }
+.diagram-card p { margin: 8px 0 0; color: #607287; font-size: 11px; text-align: center; }
+.gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.gallery img {
+  width: 100%; height: 154px; object-fit: cover; border: 1px solid #b8c7d9;
+  border-radius: 8px; background: #fff;
+}
+.gallery span { display: block; color: #607287; font-size: 10px; margin-top: 4px; }
+.small { font-size: 12px; color: #607287; }
+.tight { line-height: 1.25; }
+.list { margin: 0; padding-left: 18px; color: #43566c; font-size: 13px; line-height: 1.5; }
+.list li { margin-bottom: 5px; }
+.hero {
+  display: grid; grid-template-columns: 1.15fr .85fr; gap: 20px; height: 100%;
+}
+.hero pre { max-height: 700px; }
+.kv { display: grid; grid-template-columns: 150px 1fr; gap: 4px 10px; font-size: 13px; }
+.kv strong { color: #1b4f72; }

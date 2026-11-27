@@ -8,6 +8,79 @@ SUBJECT = "Dev Ops and Automation"
 RUNNING_HEADER = "Dev Ops and Automation"
 FOOTER_TITLE = "Dev Ops and Automation Lab Manual"
 REPOSITORY_URL = "https://github.com/ArghyadiptaGoswami4259/DEV-OPS-Cap-Stone"
+
+IMPLEMENTATION_SCREENSHOTS = [
+    {
+        "path": "docs/implementation-showcase/screenshots/01-template-cover.png",
+        "title": "Template-styled capstone cover",
+        "caption": "The requested cover design, student metadata and clickable repository link.",
+    },
+    {
+        "path": "docs/implementation-showcase/screenshots/02-live-application.png",
+        "title": "TaskFlow on the local host",
+        "caption": "Live browser UI on 0.0.0.0:8010 with health, release identity and task CRUD.",
+    },
+    {
+        "path": "docs/implementation-showcase/screenshots/03-live-api-evidence.png",
+        "title": "Live API and response headers",
+        "caption": "Actual local-host responses for health, readiness, metadata, tasks and metrics.",
+    },
+    {
+        "path": "docs/implementation-showcase/screenshots/04-api-contract.png",
+        "title": "OpenAPI contract and routes",
+        "caption": "Generated OpenAPI 3.1 contract showing the implemented TaskFlow operations.",
+    },
+    {
+        "path": "docs/implementation-showcase/screenshots/05-quality-gates.png",
+        "title": "Local quality and validation gates",
+        "caption": "Configuration sync, repository validation, lint, typing, SAST, audit and tests.",
+    },
+    {
+        "path": "docs/implementation-showcase/screenshots/06-github-actions.png",
+        "title": "GitHub Actions delivery run",
+        "caption": "Successful push-triggered CI run with quality, security and signed-image jobs.",
+    },
+    {
+        "path": "docs/implementation-showcase/screenshots/07-implementation-inventory.png",
+        "title": "Implemented component inventory",
+        "caption": "Repository-wide inventory of application, runtime, CI/CD, infrastructure and controls.",
+    },
+    {
+        "path": "docs/implementation-showcase/screenshots/08-architecture-diagrams.png",
+        "title": "Architecture and evidence diagrams",
+        "caption": "All ten generated diagrams covering architecture, delivery, security and canary flow.",
+    },
+    {
+        "path": "docs/implementation-showcase/screenshots/09-ci-cd-workflows.png",
+        "title": "CI/CD and promotion workflows",
+        "caption": "Pinned GitHub Actions jobs for CI, staging CD and production promotion.",
+    },
+    {
+        "path": "docs/implementation-showcase/screenshots/10-terraform-gitops.png",
+        "title": "Terraform and GitOps inventory",
+        "caption": "AWS resources, environment overlays, bootstrap state and hardened delivery manifests.",
+    },
+    {
+        "path": "docs/implementation-showcase/screenshots/11-security-supply-chain.png",
+        "title": "Security and supply-chain controls",
+        "caption": "Secret scanning, SAST, IaC/image scans, policy, SBOM and keyless image signing.",
+    },
+    {
+        "path": "docs/implementation-showcase/screenshots/12-observability-backup.png",
+        "title": "Observability, SLO and recovery",
+        "caption": "Prometheus, Grafana, Loki, Alertmanager, SLO, backup, restore and runbooks.",
+    },
+    {
+        "path": "docs/implementation-showcase/screenshots/13-local-runtime-release.png",
+        "title": "Local runtime and release gates",
+        "caption": "Documented Docker-independent runtime evidence plus bootstrap and strict release gates.",
+    },
+    {
+        "path": "docs/implementation-showcase/screenshots/14-implementation-gallery.png",
+        "title": "Complete implementation evidence gallery",
+        "caption": "Single-page index of every screenshot embedded in Appendix C of the PDF.",
+    },
+]
 STUDENT = {
     "name": "Arghyadipta Goswami",
     "roll": "2301010192",
@@ -614,5 +687,41 @@ APPENDICES = [
             "Evidence: signed digest + Git SHA + AnalysisRun + dashboard + backup record",
             "Outcome: approved immutable release, or automatic abort on SLO breach",
         ],
+    },
+    {
+        "key": "appendix-c",
+        "title": "Appendix C: Local Host Implementation Evidence Screenshots",
+        "intro": "The screenshots were captured from the running local TaskFlow host, the generated"
+                 " implementation showcase and the verified GitHub Actions run. They provide visual"
+                 " evidence for every major area implemented in the capstone.",
+        "sections": [
+            (
+                "What is shown",
+                [
+                    "The live TaskFlow UI, REST responses, OpenAPI contract and security/trace headers.",
+                    "Local quality gates, repository validation, tests and release-gate behavior.",
+                    "GitHub Actions quality, security, container scanning, SBOM and keyless signing.",
+                    "The application, tools, Terraform, GitOps, observability, security, backup and"
+                    " runbook inventory.",
+                    "All ten generated architecture/evidence diagrams and a complete screenshot gallery.",
+                ],
+            ),
+            (
+                "How to reproduce",
+                [
+                    "Start the app with HOST=0.0.0.0 PORT=8010 and a disposable SQLite database.",
+                    "Run make evidence to capture local screenshots and regenerate this manual.",
+                    "Run make evidence-showcase to serve the interactive screenshot gallery.",
+                    "Use the standalone implementation-evidence PDF for a screenshots-only copy.",
+                ],
+            ),
+        ],
+        "code": [
+            "make evidence",
+            "make lab-manual",
+            "make evidence-showcase",
+            "Open docs/implementation-showcase/Implementation-Evidence-Screenshots.pdf",
+        ],
+        "screenshots": IMPLEMENTATION_SCREENSHOTS,
     },
 ]

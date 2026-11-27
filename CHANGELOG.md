@@ -8,6 +8,10 @@ Keep a Changelog, and this project follows Semantic Versioning.
 ### Added
 - A clickable GitHub repository link on the lab manual cover and matching repository links in the
   DOCX and Markdown deliverables.
+- Appendix C with 14 local-host implementation screenshots, a standalone screenshots-only PDF,
+  an interactive evidence gallery, structured evidence JSON and reproducible capture slides.
+- `make evidence-install`, `make evidence` and `make evidence-showcase` for headless-browser
+  screenshot capture and a local `0.0.0.0:8011` showcase server.
 - `config/platform.env` plus `make configure` / `make configure-check` for deterministic,
   self-configuring Terraform backends, GitOps overlays, backup ARNs, DNS names, certificate email
   and observability values.

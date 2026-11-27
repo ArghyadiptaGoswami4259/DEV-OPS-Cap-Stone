@@ -5,9 +5,10 @@ PIP := .venv/bin/pip
 IMAGE ?= taskflow:local
 
 .PHONY: help env install lint test coverage run validate configure configure-check release-check \
-        lab-manual diagrams tools tools-check local-runtime local-runtime-check \
-        local-cluster-up local-cluster-check local-cluster-down docker-build compose-up \
-        compose-observability kind-up deploy-local verify-platform canary-drill rollback hooks clean
+        lab-manual diagrams evidence-install evidence evidence-showcase tools tools-check \
+        local-runtime local-runtime-check local-cluster-up local-cluster-check \
+        local-cluster-down docker-build compose-up compose-observability kind-up deploy-local \
+        verify-platform canary-drill rollback hooks clean
 
 help: ## Show available targets
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-24s\033[0m %s\n", $$1, $$2}'
@@ -73,6 +74,16 @@ release-check: ## Verify the production release manifest and policy gates
 lab-manual: ## Regenerate the original DevOps lab manual (PDF, DOCX and Markdown)
 	@$(PY) tools/generate_diagrams.py
 	@$(PY) tools/generate_lab_manual.py
+
+evidence-install: ## Install optional local screenshot-capture dependencies
+	@$(PIP) install --quiet --disable-pip-version-check -r requirements-evidence.txt
+
+evidence: ## Capture local-host screenshots and rebuild the screenshot-enhanced manual
+	@$(PY) tools/capture_implementation_evidence.py
+	@$(MAKE) lab-manual
+
+evidence-showcase: ## Serve the local implementation evidence gallery on port 8011
+	@python3 -m http.server 8011 --bind 0.0.0.0 --directory docs/implementation-showcase
 
 diagrams: ## Regenerate architecture and evidence diagrams
 	@$(PY) tools/generate_diagrams.py

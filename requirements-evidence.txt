@@ -1,0 +1,3 @@
+# Optional local screenshot-capture dependency. Browser binaries are installed separately
+# to .cache/browser by tools/capture_implementation_evidence.py using the npm registry.
+playwright==1.65.2
