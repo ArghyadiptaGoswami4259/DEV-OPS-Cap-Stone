@@ -6,8 +6,6 @@ Keep a Changelog, and this project follows Semantic Versioning.
 ## [Unreleased]
 
 ### Added
-- Quick links in `README.md` for the repository, full capstone PDF, screenshots-only PDF,
-  interactive evidence gallery and local preview ports.
 - A clickable GitHub repository link on the lab manual cover and matching repository links in the
   DOCX and Markdown deliverables.
 - Appendix C with 14 local-host implementation screenshots, a standalone screenshots-only PDF,
@@ -24,6 +22,8 @@ Keep a Changelog, and this project follows Semantic Versioning.
   exact local verification results.
 
 ### Changed
+- Reconcile `README.md` with the reviewed main cleanup by removing the quick-links section; direct
+  PDF, evidence-gallery and repository links remain in the manual/showcase artifacts.
 - Install pinned Trivy 0.76.2 from its SHA256-verified release asset for both filesystem and image
   scans so PR CI does not depend on the unavailable `get.trivy.dev` installer endpoint.
 - Retry transient GitHub release-asset HTTP failures with bounded timeouts and a pinned digest.
